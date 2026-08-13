@@ -88,6 +88,34 @@ const caseStudies = {
     logic: "Spend → CPM → CTR → CPC → Website CVR → CPA → Product → Revenue",
     note: "Revenue moved from roughly EGP 175K to about EGP 500K in the second month and later reached approximately EGP 1.2M, while cost per purchase fell to around EGP 150.",
   },
+  "education-stabilization": {
+    eyebrow: "Meta Ads Account Stabilization",
+    title: "8,000 Leads & $100K New-Customer Revenue in 6 Weeks",
+    meta: "Online Education · 4-Year Islamic Studies Program · Meta Ads · ~6 Weeks",
+    role: "Senior Performance Media Buyer",
+    intro:
+      "The account had enough historical data and creative volume, but performance was highly unstable across North Africa, GCC, Asia, and Europe. My job was to make the account readable, controllable, and scalable while connecting lead cost with actual student revenue.",
+    metrics: [
+      ["Meta Ad Spend", "EGP 270K"],
+      ["Leads Generated", "8,000"],
+      ["Blended CPL", "~EGP 34"],
+      ["New-Customer Revenue", "$100K"],
+      ["Market CPL Targets", "~EGP 50–250"],
+      ["High-CPL Markets", "Up to EGP 700"],
+    ],
+    sections: [
+      ["Country Economics", "Stopped treating every country the same. Evaluated Country → Spend → CPL → Lead-to-Paid CVR → AOV → Revenue and set market-specific acceptable acquisition ranges."],
+      ["ABO Testing", "Used ABO as the controlled testing environment for creatives, concepts, markets, messages, and audience signals without immediately disturbing scaling campaigns."],
+      ["CBO Scaling", "Moved combinations into CBO only after they showed enough repeatability in testing, then monitored whether efficiency survived higher spend."],
+      ["Bidding", "Tested bidding strategies after proven combinations survived the CBO layer, using bidding as another level of cost control and scale rather than the first move."],
+      ["Creative Groups", "Reorganized a large creative library into groups of roughly 5–6 ads designed for meaningful diversity across messages, angles, visuals, awareness, motivations, and funnel stages."],
+      ["Market Volatility", "Used stability itself as a signal. Stable markets followed Validate → Increase Budget → Observe → Scale Again, while volatile markets required fewer variables and a re-established baseline before scaling."],
+      ["Lead-to-Paid", "Optimized beyond CPL because some leads paid directly through automated email while others converted after WhatsApp or email follow-up. Lead-to-Paid CVR became a key market comparison signal."],
+      ["Economics-Based Scaling", "Allocated budget through the relationship between CPL × Lead-to-Paid CVR × AOV, allowing more expensive leads when downstream conversion and student value justified the cost."],
+    ],
+    logic: "Country Economics → ABO Testing → Creative Group Validation → CBO Scaling → Bidding → Lead-to-Paid Analysis → Market-Specific Scaling",
+    note: "Within approximately six weeks, roughly EGP 270K in Meta spend generated 8,000 leads, producing a blended CPL of about EGP 34 and $100K in revenue from new students acquired during the same period. Future annual renewals are excluded.",
+  },
 } as const;
 
 export function generateStaticParams() {
