@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../src/app/globals.css";
 import "../src/app/portfolio-motion.css";
+import "../src/app/hero-actions.css";
 import { FlickeringGrid } from "@/components/magicui/flickering-grid";
 
 const geist = Geist({
