@@ -16,7 +16,7 @@ const LEGACY_ASSET_BASE = "https://charm-component-cloud.vercel.app/assets";
 export const DATA = {
   name: "Sherif Saad Sofiu",
   initials: "SS",
-  url: "https://portfolio-shiffoo.vercel.app",
+  url: "https://sherif-short-portfolio.vercel.app",
   location: "Cairo, Egypt",
   locationLink: "https://www.google.com/maps/place/Cairo,+Egypt",
   description:
@@ -81,7 +81,7 @@ export const DATA = {
     social: {
       LinkedIn: {
         name: "LinkedIn",
-        url: "https://www.linkedin.com/in/sherif-saad-growth/",
+        url: "https://www.linkedin.com/in/sherif-sofiu/",
         icon: Icons.linkedin,
         navbar: true,
       },
