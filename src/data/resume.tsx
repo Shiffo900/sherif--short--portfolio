@@ -11,7 +11,7 @@ import {
   BarChart3,
 } from "lucide-react";
 
-const LEGACY_ASSET_BASE = "https://charm-component-cloud.vercel.app/assets";
+const LEGACY_ASSET_BASE = "/legacy-assets";
 
 export const DATA = {
   name: "Sherif Saad Sofiu",
