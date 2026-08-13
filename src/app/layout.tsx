@@ -23,15 +23,16 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(DATA.url),
   title: {
-    default: DATA.name,
-    template: `%s | ${DATA.name}`,
+    default: "Sherif Saad Sofiu — Senior Performance Media Buyer",
+    template: `%s | Sherif Saad Sofiu`,
   },
-  description: DATA.description,
+  description:
+    "Senior Performance Media Buyer focused on paid media strategy, structured experimentation, full-funnel optimization, measurement, reporting, and AI-assisted performance systems across GCC and North African markets.",
   openGraph: {
-    title: `${DATA.name}`,
+    title: "Sherif Saad Sofiu — Senior Performance Media Buyer",
     description: DATA.description,
     url: DATA.url,
-    siteName: `${DATA.name}`,
+    siteName: "Sherif Saad Sofiu",
     locale: "en_US",
     type: "website",
   },
@@ -47,12 +48,9 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: `${DATA.name}`,
+    title: "Sherif Saad Sofiu — Senior Performance Media Buyer",
+    description: DATA.description,
     card: "summary_large_image",
-  },
-  verification: {
-    google: "",
-    yandex: "",
   },
 };
 
