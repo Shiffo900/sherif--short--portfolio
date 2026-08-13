@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
-import { DATA } from "@/data/resume";
 
 const caseStudies = {
   "travel-growth": {
@@ -32,7 +31,6 @@ const caseStudies = {
     ],
     logic: "Market Research → Persona & Destination Strategy → Offer → Creative Testing → Landing Page → Acquisition → Sales Routing → Sales Feedback → New Marketing Decisions",
     note: "The company profile documents the wider growth period at 650 customers, $1.33M revenue, $106K ad spend, and CAC reduced to $120.",
-    screenshots: DATA.resultScreenshots.slice(0, 5),
   },
   "travel-performance": {
     eyebrow: "Travel Performance Case Study",
@@ -62,7 +60,6 @@ const caseStudies = {
     ],
     logic: "Observation → Pattern → Hypothesis → Test → Decision",
     note: "The wider four-year company journey reports 11,000+ trips sold, $33M+ revenue, $2M+ ad spend, and 30%+ CAC improvement. My direct involvement covered roughly two years.",
-    screenshots: DATA.resultScreenshots.slice(5, 10),
   },
   "ecommerce-turnaround": {
     eyebrow: "E-Commerce Performance Turnaround",
@@ -90,7 +87,6 @@ const caseStudies = {
     ],
     logic: "Spend → CPM → CTR → CPC → Website CVR → CPA → Product → Revenue",
     note: "Revenue moved from roughly EGP 175K to about EGP 500K in the second month and later reached approximately EGP 1.2M, while cost per purchase fell to around EGP 150.",
-    screenshots: DATA.resultScreenshots.slice(10, 15),
   },
 } as const;
 
@@ -147,20 +143,6 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       <section className="rounded-xl border bg-muted/20 p-4">
         <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Operating Logic</p>
         <p className="mt-2 text-sm font-medium leading-relaxed">{study.logic}</p>
-      </section>
-
-      <section className="space-y-4">
-        <div>
-          <p className="text-xs font-medium uppercase tracking-[0.24em] text-muted-foreground">Selected Performance Evidence</p>
-          <p className="mt-1 text-sm text-muted-foreground">Screenshots from the portfolio evidence archive, displayed here without leaving the short portfolio.</p>
-        </div>
-        <div className="grid gap-3">
-          {study.screenshots.map((image, index) => (
-            <div key={image} className="overflow-hidden rounded-xl border bg-card ring-1 ring-border/20">
-              <img src={image} alt={`Selected performance evidence ${index + 1}`} className="h-auto w-full" loading="lazy" />
-            </div>
-          ))}
-        </div>
       </section>
 
       <section className="rounded-xl border p-4 text-xs leading-relaxed text-muted-foreground">
