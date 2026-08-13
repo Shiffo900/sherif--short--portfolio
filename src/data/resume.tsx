@@ -13,6 +13,8 @@ import {
   BarChart3,
 } from "lucide-react";
 
+const LEGACY_ASSET_BASE = "https://charm-component-cloud.vercel.app/assets";
+
 export const DATA = {
   name: "Sherif Saad Sofiu",
   initials: "SS",
@@ -23,19 +25,57 @@ export const DATA = {
     "Senior Performance Media Buyer · Paid Media Strategy · Structured Experimentation · Full-Funnel Optimization",
   summary:
     "Business-minded Senior Performance Media Buyer with hands-on paid acquisition experience across GCC and North African markets. Specialized in Meta and Snapchat Ads, with additional experience across TikTok and Google Ads. I work across education, travel, e-commerce, dropshipping, and mobile app businesses — combining business and advertising audits, full-funnel planning, structured experimentation, performance investigation, and hands-on campaign optimization.",
-  avatarUrl: "",
+  avatarUrl: `${LEGACY_ASSET_BASE}/profile-sherif-CRWGRfaV.jpg`,
 
   skills: [
-    { name: "Business & Ad Account Auditing", icon: Search },
+    { name: "Ad Account Structure", icon: Waypoints },
+    { name: "Account Auditing & Diagnosis", icon: Search },
+    { name: "Data Analysis & Decision Making", icon: ChartSpline },
+    { name: "Funnel Building", icon: Waypoints },
+    { name: "Testing & Learning Loops", icon: FlaskConical },
+    { name: "High Budget Management", icon: BarChart3 },
+    { name: "Controlled Scaling", icon: Gauge },
+    { name: "Spend Protection", icon: Gauge },
+    { name: "AI Power User", icon: Bot },
     { name: "Paid Media Strategy", icon: Target },
-    { name: "Media Planning", icon: BarChart3 },
-    { name: "Campaign Architecture", icon: Waypoints },
-    { name: "Structured Creative Testing", icon: FlaskConical },
-    { name: "Campaign Structure Testing", icon: PanelTop },
-    { name: "Full-Funnel Analysis", icon: ChartSpline },
-    { name: "Performance Investigation", icon: Gauge },
-    { name: "Tracking & Measurement", icon: Tags },
-    { name: "Dashboards, Automation & AI", icon: Bot },
+    { name: "Media Planning & Budget Allocation", icon: BarChart3 },
+    { name: "Campaign Architecture", icon: PanelTop },
+    { name: "Creative Strategy & Structural Testing", icon: FlaskConical },
+    { name: "Performance Investigation", icon: Search },
+    { name: "Pattern Recognition & Anomaly Detection", icon: Gauge },
+    { name: "Tracking & Attribution", icon: Tags },
+    { name: "Dashboard & Reporting Automation", icon: Bot },
+    { name: "Landing Page & Funnel Analysis", icon: ChartSpline },
+    { name: "Naming, UTM & Measurement Governance", icon: Tags },
+    { name: "Multi-Channel Paid Acquisition", icon: Target },
+  ],
+
+  brands: [
+    { name: "Modrk", logo: `${LEGACY_ASSET_BASE}/modrk-DzQCOhRT.png` },
+    { name: "4 Seasons", logo: `${LEGACY_ASSET_BASE}/4seasons-a8b5ObPg.png` },
+    { name: "Fantastic Tours", logo: `${LEGACY_ASSET_BASE}/fantastic-CJA2EKx8.png` },
+    { name: "Mother Planet", logo: `${LEGACY_ASSET_BASE}/motherplanet-D_ChjyQs.jpg` },
+    { name: "Amazon Tours", logo: `${LEGACY_ASSET_BASE}/amazontours-B4Al5bwM.png` },
+    { name: "Sleep Well", logo: `${LEGACY_ASSET_BASE}/sleepwell-DG5s7eYE.jpg` },
+    { name: "Montad Travel", logo: `${LEGACY_ASSET_BASE}/mentad-B4Z650zF.jpg` },
+  ],
+
+  resultScreenshots: [
+    `${LEGACY_ASSET_BASE}/result-1-B2fXSnke.png`,
+    `${LEGACY_ASSET_BASE}/result-2-CYEt_g9b.png`,
+    `${LEGACY_ASSET_BASE}/result-3-BAaYwcVx.png`,
+    `${LEGACY_ASSET_BASE}/result-4-Dhz0ENMu.png`,
+    `${LEGACY_ASSET_BASE}/result-5-DpeyehQS.png`,
+    `${LEGACY_ASSET_BASE}/result-6-CoLrYAZY.png`,
+    `${LEGACY_ASSET_BASE}/result-7-DeH_26cM.png`,
+    `${LEGACY_ASSET_BASE}/result-8-DREz8Qr9.png`,
+    `${LEGACY_ASSET_BASE}/result-9-CFth9jSw.png`,
+    `${LEGACY_ASSET_BASE}/result-10-9HU-Jhui.png`,
+    `${LEGACY_ASSET_BASE}/result-11-a6Bt8Ljy.png`,
+    `${LEGACY_ASSET_BASE}/result-12-DNaW5LAW.png`,
+    `${LEGACY_ASSET_BASE}/result-13-DB1Wg6A3.png`,
+    `${LEGACY_ASSET_BASE}/result-14-84Kn2xKB.png`,
+    `${LEGACY_ASSET_BASE}/result-15-DgJpCJxo.png`,
   ],
 
   navbar: [{ href: "/", icon: HomeIcon, label: "Home" }],
