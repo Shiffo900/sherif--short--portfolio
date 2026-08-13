@@ -1,0 +1,40 @@
+#hero a[href="/Sherif-Saad-Sofiu-CV.pdf"],
+#hero a[href="https://charm-component-cloud.vercel.app"] {
+  min-height: 3rem !important;
+  border-radius: 1rem !important;
+  padding: .75rem 1rem !important;
+  gap: .625rem !important;
+  font-weight: 600 !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,.06) !important;
+  background-image: none !important;
+  transform: translateY(0);
+}
+
+#hero a[href="/Sherif-Saad-Sofiu-CV.pdf"] {
+  background: hsl(var(--primary)) !important;
+  color: hsl(var(--primary-foreground)) !important;
+  border-color: transparent !important;
+}
+
+#hero a[href="https://charm-component-cloud.vercel.app"] {
+  background: hsl(var(--background)) !important;
+  color: hsl(var(--foreground)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+}
+
+#hero a[href="/Sherif-Saad-Sofiu-CV.pdf"]:hover,
+#hero a[href="https://charm-component-cloud.vercel.app"]:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 20px rgba(0,0,0,.08) !important;
+}
+
+.dark #hero a[href="/Sherif-Saad-Sofiu-CV.pdf"] {
+  background: rgba(255,255,255,.94) !important;
+  color: #111318 !important;
+}
+
+.dark #hero a[href="https://charm-component-cloud.vercel.app"] {
+  background: rgba(255,255,255,.055) !important;
+  color: rgba(255,255,255,.96) !important;
+  border-color: rgba(255,255,255,.14) !important;
+}
