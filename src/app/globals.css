@@ -234,3 +234,155 @@
   }
 
 }
+
+/* Liquid Glass dark theme — keeps light mode and layout untouched. */
+.dark {
+  --background: oklch(0.115 0.015 265);
+  --foreground: oklch(0.975 0.004 255);
+  --card: oklch(0.25 0.018 265 / 54%);
+  --card-foreground: oklch(0.975 0.004 255);
+  --popover: oklch(0.22 0.018 265 / 78%);
+  --popover-foreground: oklch(0.975 0.004 255);
+  --primary: oklch(0.96 0.006 255);
+  --primary-foreground: oklch(0.15 0.018 265);
+  --secondary: oklch(0.28 0.018 265 / 52%);
+  --secondary-foreground: oklch(0.96 0.006 255);
+  --muted: oklch(0.27 0.016 265 / 48%);
+  --muted-foreground: oklch(0.76 0.015 255);
+  --accent: oklch(0.31 0.02 265 / 58%);
+  --accent-foreground: oklch(0.98 0.004 255);
+  --border: oklch(1 0 0 / 13%);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.78 0.045 255 / 42%);
+  --sidebar: oklch(0.22 0.018 265 / 68%);
+  --sidebar-border: oklch(1 0 0 / 12%);
+}
+
+.dark body {
+  background-color: #080a10;
+  background-image:
+    radial-gradient(circle at 18% 6%, rgba(89, 143, 255, 0.16), transparent 30%),
+    radial-gradient(circle at 82% 14%, rgba(169, 101, 255, 0.12), transparent 28%),
+    radial-gradient(circle at 52% 88%, rgba(55, 204, 184, 0.075), transparent 32%),
+    linear-gradient(180deg, #090b12 0%, #080a10 48%, #07090e 100%);
+  background-attachment: fixed;
+}
+
+.dark body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.035), transparent 22%),
+    radial-gradient(circle at 70% 40%, rgba(255, 255, 255, 0.02), transparent 20%);
+  mix-blend-mode: screen;
+}
+
+.dark main [class*="bg-card"],
+.dark main [class*="bg-background"] {
+  -webkit-backdrop-filter: blur(24px) saturate(165%);
+  backdrop-filter: blur(24px) saturate(165%);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.10),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.025),
+    0 16px 46px rgba(0, 0, 0, 0.22);
+}
+
+.dark main [class*="bg-card"] {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.026)) !important;
+}
+
+.dark main [class*="bg-background"] {
+  background-color: rgba(17, 21, 30, 0.48) !important;
+}
+
+.dark main [class*="bg-muted"] {
+  background-color: rgba(255, 255, 255, 0.055) !important;
+}
+
+.dark main .border,
+.dark main [class*="border-"] {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.dark #brands [class*="bg-white"] {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.07)) !important;
+  -webkit-backdrop-filter: blur(26px) saturate(170%);
+  backdrop-filter: blur(26px) saturate(170%);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 16px 42px rgba(0, 0, 0, 0.24);
+}
+
+.dark #brands [class*="bg-white"] span {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+.dark .liquid-dock {
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.045)) !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(185%);
+  backdrop-filter: blur(30px) saturate(185%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.03),
+    0 20px 60px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(255, 255, 255, 0.025) !important;
+}
+
+.dark .liquid-dock::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.15), transparent 28%, transparent 68%, rgba(125, 166, 255, 0.09));
+}
+
+.dark .liquid-dock-icon {
+  background: rgba(255, 255, 255, 0.055) !important;
+  border-color: rgba(255, 255, 255, 0.11) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+
+.dark .liquid-dock-icon:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.20) !important;
+  transform: translateY(-1px) scale(1.02);
+}
+
+.dark .liquid-tooltip {
+  color: rgba(255, 255, 255, 0.94) !important;
+  background: rgba(22, 26, 37, 0.70) !important;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  -webkit-backdrop-filter: blur(24px) saturate(175%);
+  backdrop-filter: blur(24px) saturate(175%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.10),
+    0 18px 44px rgba(0, 0, 0, 0.38) !important;
+}
+
+.dark .text-muted-foreground {
+  color: rgba(222, 227, 239, 0.68);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .dark main [class*="bg-card"],
+  .dark main [class*="bg-background"],
+  .dark .liquid-dock,
+  .dark .liquid-tooltip {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
