@@ -11,12 +11,24 @@ import { DATA } from "@/data/resume";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+function getInitials(name: string) {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
+}
+
 function LogoImage({ src, alt }: { src: string; alt: string }) {
   const [imageError, setImageError] = useState(false);
 
   if (!src || imageError) {
     return (
-      <div className="size-8 md:size-10 p-1 border rounded-full shadow ring-2 ring-border bg-muted flex-none" />
+      <div className="size-8 md:size-10 border rounded-full bg-muted/50 flex-none flex items-center justify-center text-[10px] md:text-xs font-semibold tracking-tight text-foreground ring-1 ring-border">
+        {getInitials(alt)}
+      </div>
     );
   }
 
@@ -24,7 +36,7 @@ function LogoImage({ src, alt }: { src: string; alt: string }) {
     <img
       src={src}
       alt={alt}
-      className="size-8 md:size-10 p-1 border rounded-full shadow ring-2 ring-border overflow-hidden object-contain flex-none"
+      className="size-8 md:size-10 p-1 border rounded-full shadow-sm ring-1 ring-border overflow-hidden object-contain flex-none bg-white"
       onError={() => setImageError(true)}
     />
   );
