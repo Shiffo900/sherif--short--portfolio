@@ -1,0 +1,31 @@
+@keyframes portfolio-marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.brand-marquee-track {
+  animation: portfolio-marquee-left 24s linear infinite;
+  will-change: transform;
+}
+
+.results-marquee-track {
+  animation: portfolio-marquee-left 42s linear infinite;
+  will-change: transform;
+}
+
+.brand-marquee:hover .brand-marquee-track,
+.results-marquee:hover .results-marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-marquee-track,
+  .results-marquee-track {
+    animation: none;
+    transform: none;
+  }
+}
