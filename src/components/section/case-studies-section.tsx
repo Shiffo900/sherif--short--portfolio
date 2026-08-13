@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowUpRight, ChevronDown } from "lucide-react";
 
 const cases = [
@@ -9,7 +10,7 @@ const cases = [
     title: "From Early Traction to 650 Paying Travelers",
     role: "Senior Performance Media Buyer",
     meta: "Saudi Arabia → Europe · ~2 years",
-    href: "https://charm-component-cloud.vercel.app/case-study/travel-growth",
+    href: "/case-studies/travel-growth",
     metrics: [
       { label: "Paying Travelers", value: "5 → 650" },
       { label: "CAC", value: "$600 → $120" },
@@ -37,7 +38,7 @@ const cases = [
     title: "Scaling From 200–300 Seasonal Trips to 3,500",
     role: "Senior Performance Media Buyer",
     meta: "Europe & International Travel · ~2 years involvement",
-    href: "https://charm-component-cloud.vercel.app/case-study/travel-performance",
+    href: "/case-studies/travel-performance",
     metrics: [
       { label: "Peak Annual Volume", value: "~3,500" },
       { label: "Trips Sold", value: "11,000+" },
@@ -54,8 +55,7 @@ const cases = [
       "Used sales-rep and destination-level closing data to interpret lead quality and allocate budget.",
       "Made decisions through Pattern → Hypothesis → Test → Decision rather than reacting to single-day movement.",
     ],
-    logic:
-      "Observation → Pattern → Hypothesis → Test → Decision",
+    logic: "Observation → Pattern → Hypothesis → Test → Decision",
     note:
       "The wider four-year company journey reports 11,000+ trips sold, $33M+ revenue, $2M+ ad spend, and 30%+ CAC improvement. My direct involvement covered roughly two years.",
   },
@@ -65,7 +65,7 @@ const cases = [
     title: "From EGP 175K to EGP 1.2M Monthly Revenue",
     role: "Senior Performance Media Buyer",
     meta: "Baby Products & Strollers · Shopify · ownership from Nov 2024",
-    href: "https://charm-component-cloud.vercel.app/case-study/ecommerce-turnaround",
+    href: "/case-studies/ecommerce-turnaround",
     metrics: [
       { label: "Monthly Revenue", value: "175K → 1.2M" },
       { label: "Cost / Purchase", value: "500–600 → ~150" },
@@ -82,8 +82,7 @@ const cases = [
       "Used catalog campaigns, Bid Cap, structured retargeting, and cleaner exclusions to control scale.",
       "Separated Shopify purchases from message-assisted sales and actively scaled lower-ticket products for incremental revenue.",
     ],
-    logic:
-      "Spend → CPM → CTR → CPC → Website CVR → CPA → Product → Revenue",
+    logic: "Spend → CPM → CTR → CPC → Website CVR → CPA → Product → Revenue",
     note:
       "Monthly revenue moved from roughly EGP 175K to EGP 500K in the second month and later reached approximately EGP 1.2M, while cost per purchase fell to around EGP 150.",
   },
@@ -93,35 +92,22 @@ export default function CaseStudiesSection() {
   return (
     <div className="mt-12 border-t pt-10">
       <div className="mb-5">
-        <p className="text-xs uppercase tracking-[0.26em] text-muted-foreground font-medium">
-          Selected Case Studies
-        </p>
+        <p className="text-xs uppercase tracking-[0.26em] text-muted-foreground font-medium">Selected Case Studies</p>
         <h2 className="mt-2 text-xl font-bold">Performance Work, Condensed</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Three cases showing how I diagnose, test, connect funnel signals, and scale.
-        </p>
+        <p className="mt-1 text-sm text-muted-foreground">Three cases showing how I diagnose, test, connect funnel signals, and scale.</p>
       </div>
 
       <div className="grid gap-3">
         {cases.map((study) => (
-          <details
-            key={study.id}
-            className="group rounded-xl border bg-card ring-1 ring-border/20 transition-all duration-200 open:shadow-sm"
-          >
+          <details key={study.id} className="group rounded-xl border bg-card ring-1 ring-border/20 transition-all duration-200 open:shadow-sm">
             <summary className="cursor-pointer list-none p-4 [&::-webkit-details-marker]:hidden">
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                    <span className="font-mono text-primary">Case {study.id}</span>
-                    <span>·</span>
-                    <span>{study.eyebrow}</span>
+                    <span className="font-mono text-primary">Case {study.id}</span><span>·</span><span>{study.eyebrow}</span>
                   </div>
-                  <h3 className="mt-2 text-base font-semibold leading-snug sm:text-lg">
-                    {study.title}
-                  </h3>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    {study.role} · {study.meta}
-                  </p>
+                  <h3 className="mt-2 text-base font-semibold leading-snug sm:text-lg">{study.title}</h3>
+                  <p className="mt-1 text-xs text-muted-foreground">{study.role} · {study.meta}</p>
                 </div>
                 <ChevronDown className="mt-1 size-4 shrink-0 text-muted-foreground transition-transform duration-200 group-open:rotate-180" />
               </div>
@@ -130,9 +116,7 @@ export default function CaseStudiesSection() {
                 {study.metrics.map((metric) => (
                   <div key={metric.label} className="rounded-lg border bg-background/70 px-2.5 py-2">
                     <p className="text-sm font-semibold tracking-tight">{metric.value}</p>
-                    <p className="mt-0.5 text-[9px] uppercase tracking-[0.12em] text-muted-foreground">
-                      {metric.label}
-                    </p>
+                    <p className="mt-0.5 text-[9px] uppercase tracking-[0.12em] text-muted-foreground">{metric.label}</p>
                   </div>
                 ))}
               </div>
@@ -140,39 +124,22 @@ export default function CaseStudiesSection() {
 
             <div className="border-t px-4 pb-4 pt-4">
               <p className="text-sm leading-relaxed text-muted-foreground">{study.overview}</p>
-
               <div className="mt-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                  How I worked it
-                </p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">How I worked it</p>
                 <ul className="mt-2 grid gap-2 text-xs leading-relaxed text-muted-foreground sm:text-sm">
                   {study.approach.map((item) => (
-                    <li key={item} className="flex gap-2.5">
-                      <span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
-                      <span>{item}</span>
-                    </li>
+                    <li key={item} className="flex gap-2.5"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" /><span>{item}</span></li>
                   ))}
                 </ul>
               </div>
-
               <div className="mt-4 rounded-lg border bg-muted/20 p-3">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                  Operating Logic
-                </p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Operating Logic</p>
                 <p className="mt-1.5 text-xs font-medium leading-relaxed sm:text-sm">{study.logic}</p>
               </div>
-
               <p className="mt-3 text-[11px] leading-relaxed text-muted-foreground">{study.note}</p>
-
-              <a
-                href={study.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-foreground transition-colors hover:text-primary"
-              >
-                Read full case study
-                <ArrowUpRight className="size-3.5" />
-              </a>
+              <Link href={study.href} className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-foreground transition-colors hover:text-primary">
+                Read full case study <ArrowUpRight className="size-3.5" />
+              </Link>
             </div>
           </details>
         ))}
