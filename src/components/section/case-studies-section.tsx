@@ -46,6 +46,20 @@ const cases = [
       { label: "Second Month", value: "~EGP 500K" },
     ],
   },
+  {
+    id: "04",
+    eyebrow: "Meta Account Stabilization",
+    title: "8,000 Leads & $100K New-Customer Revenue in 6 Weeks",
+    role: "Senior Performance Media Buyer",
+    meta: "Online Education · North Africa, GCC, Asia & Europe · ~6 weeks",
+    href: "/case-studies/education-stabilization",
+    metrics: [
+      { label: "Leads", value: "8,000" },
+      { label: "Meta Ad Spend", value: "EGP 270K" },
+      { label: "Blended CPL", value: "~EGP 34" },
+      { label: "New-Customer Revenue", value: "$100K" },
+    ],
+  },
 ] as const;
 
 export default function CaseStudiesSection() {
@@ -54,7 +68,7 @@ export default function CaseStudiesSection() {
       <div className="mb-5">
         <p className="text-xs uppercase tracking-[0.26em] text-muted-foreground font-medium">Selected Case Studies</p>
         <h2 className="mt-2 text-xl font-bold">Performance Work, Condensed</h2>
-        <p className="mt-1 text-sm text-muted-foreground">Three selected cases. Open any case for the full breakdown.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Four selected cases. Open any case for the full breakdown.</p>
       </div>
 
       <div className="grid gap-3">
