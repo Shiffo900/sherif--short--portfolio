@@ -4,7 +4,7 @@ import { DATA } from "@/data/resume";
 
 export default function ResultsPage() {
   return (
-    <main className="mx-auto w-full max-w-6xl space-y-10 pb-16">
+    <main className="relative left-1/2 w-[94vw] max-w-6xl -translate-x-1/2 space-y-10 pb-16">
       <Link
         href="/#results"
         className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
