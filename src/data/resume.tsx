@@ -215,6 +215,7 @@ export const DATA = {
         { name: "Make", icon: "https://cdn.simpleicons.org/make/6D00CC" },
         { name: "Zapier", icon: "https://cdn.simpleicons.org/zapier/FF4F00" },
         { name: "n8n", icon: "https://cdn.simpleicons.org/n8n/EA4B71" },
+        { name: "Lovable", icon: "https://lovable.dev/favicon.ico" },
         { name: "ChatGPT", icon: "https://cdn.simpleicons.org/openai/000000" },
         { name: "Claude", icon: "https://cdn.simpleicons.org/anthropic/191919" },
         { name: "Gemini", icon: "https://cdn.simpleicons.org/googlegemini/8E75B2" },
