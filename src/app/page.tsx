@@ -1,6 +1,6 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DATA } from "@/data/resume";
 import Link from "next/link";
 import Markdown from "react-markdown";
@@ -51,6 +51,7 @@ export default function Page() {
 
             <BlurFade delay={BLUR_FADE_DELAY} className="order-1 md:order-2">
               <Avatar className="size-24 md:size-32 border rounded-full shadow-lg ring-4 ring-muted">
+                <AvatarImage src={DATA.avatarUrl} alt={DATA.name} className="object-cover" />
                 <AvatarFallback className="text-2xl md:text-3xl font-semibold tracking-tight">
                   {DATA.initials}
                 </AvatarFallback>
@@ -85,14 +86,14 @@ export default function Page() {
       </section>
 
       <section id="skills">
-        <div className="flex min-h-0 flex-col gap-y-4">
+        <div className="flex min-h-0 flex-col gap-y-5">
           <BlurFade delay={BLUR_FADE_DELAY * 7}>
-            <h2 className="text-xl font-bold">Core Expertise</h2>
+            <p className="text-xs uppercase tracking-[0.26em] text-muted-foreground font-medium">What I&apos;m Good At</p>
           </BlurFade>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2.5">
             {DATA.skills.map((skill, id) => (
-              <BlurFade key={skill.name} delay={BLUR_FADE_DELAY * 8 + id * 0.035}>
-                <div className="border bg-background border-border ring-2 ring-border/20 rounded-xl min-h-8 w-fit px-3.5 py-1.5 flex items-center gap-2">
+              <BlurFade key={skill.name} delay={BLUR_FADE_DELAY * 8 + id * 0.025}>
+                <div className="border bg-background border-border ring-2 ring-border/20 rounded-full min-h-9 w-fit px-4 py-2 flex items-center gap-2">
                   <skill.icon className="size-4 text-muted-foreground" />
                   <span className="text-foreground text-sm font-medium">{skill.name}</span>
                 </div>
@@ -102,14 +103,71 @@ export default function Page() {
         </div>
       </section>
 
-      <section id="systems">
+      <section id="brands">
         <div className="flex min-h-0 flex-col gap-y-5">
           <BlurFade delay={BLUR_FADE_DELAY * 9}>
+            <div>
+              <h2 className="text-xl font-bold">Brands I&apos;ve Worked On</h2>
+              <p className="mt-1 text-sm text-muted-foreground">Selected brands from the portfolio archive.</p>
+            </div>
+          </BlurFade>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {DATA.brands.map((brand, index) => (
+              <BlurFade key={brand.name} delay={BLUR_FADE_DELAY * 10 + index * 0.04}>
+                <div className="h-28 rounded-xl border bg-white p-4 ring-2 ring-border/20 flex flex-col items-center justify-center gap-3 overflow-hidden">
+                  <img src={brand.logo} alt={`${brand.name} logo`} loading="lazy" className="max-h-12 max-w-[120px] object-contain" />
+                  <span className="text-[11px] font-medium text-neutral-600 text-center">{brand.name}</span>
+                </div>
+              </BlurFade>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="results">
+        <div className="flex min-h-0 flex-col gap-y-5">
+          <BlurFade delay={BLUR_FADE_DELAY * 11}>
+            <div>
+              <h2 className="text-xl font-bold">Selected Results</h2>
+              <p className="mt-1 text-sm text-muted-foreground">Campaign screenshots from previous paid media work. Open any card to inspect the original image.</p>
+            </div>
+          </BlurFade>
+          <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-3 -mx-1 px-1">
+            {DATA.resultScreenshots.map((image, index) => (
+              <BlurFade key={image} delay={BLUR_FADE_DELAY * 12 + index * 0.02}>
+                <a
+                  href={image}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group block min-w-[280px] sm:min-w-[360px] snap-start overflow-hidden rounded-xl border bg-card ring-2 ring-border/20"
+                >
+                  <div className="aspect-[16/10] bg-muted/30 overflow-hidden">
+                    <img
+                      src={image}
+                      alt={`Campaign performance screenshot ${index + 1}`}
+                      loading="lazy"
+                      className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+                    />
+                  </div>
+                  <div className="flex items-center justify-between gap-3 px-3 py-2.5">
+                    <span className="text-xs font-medium">Performance Snapshot {String(index + 1).padStart(2, "0")}</span>
+                    <ArrowUpRight className="size-3.5 text-muted-foreground" />
+                  </div>
+                </a>
+              </BlurFade>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="systems">
+        <div className="flex min-h-0 flex-col gap-y-5">
+          <BlurFade delay={BLUR_FADE_DELAY * 13}>
             <h2 className="text-xl font-bold">Performance Systems & AI Applications</h2>
           </BlurFade>
           <div className="grid sm:grid-cols-2 gap-3">
             {DATA.systems.map((system, index) => (
-              <BlurFade key={system.title} delay={BLUR_FADE_DELAY * 10 + index * 0.05}>
+              <BlurFade key={system.title} delay={BLUR_FADE_DELAY * 14 + index * 0.05}>
                 <div className="h-full rounded-xl border bg-card p-4 ring-2 ring-border/20">
                   <h3 className="font-semibold text-sm">{system.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{system.description}</p>
@@ -122,12 +180,12 @@ export default function Page() {
 
       <section id="tools">
         <div className="flex min-h-0 flex-col gap-y-5">
-          <BlurFade delay={BLUR_FADE_DELAY * 11}>
+          <BlurFade delay={BLUR_FADE_DELAY * 15}>
             <h2 className="text-xl font-bold">Platforms & Tools</h2>
           </BlurFade>
           <div className="flex flex-col gap-5">
             {DATA.toolGroups.map((group, index) => (
-              <BlurFade key={group.label} delay={BLUR_FADE_DELAY * 12 + index * 0.05}>
+              <BlurFade key={group.label} delay={BLUR_FADE_DELAY * 16 + index * 0.05}>
                 <div className="grid gap-2 sm:grid-cols-[150px_1fr]">
                   <p className="text-sm font-semibold">{group.label}</p>
                   <div className="flex flex-wrap gap-1.5">
@@ -146,7 +204,7 @@ export default function Page() {
 
       <section id="markets">
         <div className="grid sm:grid-cols-2 gap-8">
-          <BlurFade delay={BLUR_FADE_DELAY * 13}>
+          <BlurFade delay={BLUR_FADE_DELAY * 17}>
             <div className="flex flex-col gap-3">
               <h2 className="text-xl font-bold">Markets</h2>
               <div className="flex flex-wrap gap-1.5">
@@ -156,7 +214,7 @@ export default function Page() {
               </div>
             </div>
           </BlurFade>
-          <BlurFade delay={BLUR_FADE_DELAY * 14}>
+          <BlurFade delay={BLUR_FADE_DELAY * 18}>
             <div className="flex flex-col gap-3">
               <h2 className="text-xl font-bold">Industries</h2>
               <div className="flex flex-wrap gap-1.5">
@@ -171,12 +229,12 @@ export default function Page() {
 
       <section id="education">
         <div className="flex min-h-0 flex-col gap-y-6">
-          <BlurFade delay={BLUR_FADE_DELAY * 15}>
+          <BlurFade delay={BLUR_FADE_DELAY * 19}>
             <h2 className="text-xl font-bold">Education & Additional Information</h2>
           </BlurFade>
 
           {DATA.education.map((education) => (
-            <BlurFade key={education.school} delay={BLUR_FADE_DELAY * 16}>
+            <BlurFade key={education.school} delay={BLUR_FADE_DELAY * 20}>
               <Link
                 href={education.href}
                 target="_blank"
@@ -202,7 +260,7 @@ export default function Page() {
 
           <div className="grid sm:grid-cols-2 gap-2 pt-1">
             {DATA.additional.map((item, index) => (
-              <BlurFade key={item.label} delay={BLUR_FADE_DELAY * 17 + index * 0.04}>
+              <BlurFade key={item.label} delay={BLUR_FADE_DELAY * 21 + index * 0.04}>
                 <div className="rounded-xl border p-3">
                   <p className="text-xs font-medium text-muted-foreground">{item.label}</p>
                   <p className="mt-1 text-sm font-medium">{item.value}</p>
@@ -214,7 +272,7 @@ export default function Page() {
       </section>
 
       <section id="contact">
-        <BlurFade delay={BLUR_FADE_DELAY * 18}>
+        <BlurFade delay={BLUR_FADE_DELAY * 22}>
           <ContactSection />
         </BlurFade>
       </section>
