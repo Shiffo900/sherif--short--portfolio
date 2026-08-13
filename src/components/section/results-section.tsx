@@ -8,6 +8,18 @@ const RESULTS = DATA.resultScreenshots;
 export default function ResultsSection() {
   return (
     <section id="results" className="overflow-hidden">
+      <style>{`
+        #brands img {
+          max-height: 3.5rem !important;
+          max-width: 7.5rem !important;
+          filter: contrast(1.12) saturate(1.08);
+        }
+        #brands img[src*="modrk"] {
+          transform: scale(1.35);
+          filter: contrast(1.45) saturate(1.25) brightness(0.92);
+        }
+      `}</style>
+
       <div className="flex min-h-0 flex-col gap-y-5">
         <BlurFade delay={0.04 * 15}>
           <div>
