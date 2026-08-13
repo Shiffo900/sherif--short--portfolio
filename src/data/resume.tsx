@@ -8,8 +8,6 @@ import {
   ChartSpline,
   Bot,
   Tags,
-  Gauge,
-  PanelTop,
   BarChart3,
 } from "lucide-react";
 
@@ -27,26 +25,23 @@ export const DATA = {
     "Business-minded Senior Performance Media Buyer with hands-on paid acquisition experience across GCC and North African markets. Specialized in Meta and Snapchat Ads, with additional experience across TikTok and Google Ads. I work across education, travel, e-commerce, dropshipping, and mobile app businesses — combining business and advertising audits, full-funnel planning, structured experimentation, performance investigation, and hands-on campaign optimization.",
   avatarUrl: `${LEGACY_ASSET_BASE}/profile-sherif-CRWGRfaV.jpg`,
 
+  channels: [
+    { name: "Meta Ads", icon: "https://cdn.simpleicons.org/meta/0866FF" },
+    { name: "TikTok Ads", icon: "https://cdn.simpleicons.org/tiktok/000000" },
+    { name: "Snapchat Ads", icon: "https://cdn.simpleicons.org/snapchat/FFFC00" },
+    { name: "Google Ads", icon: "https://cdn.simpleicons.org/googleads/4285F4" },
+  ],
+
   skills: [
     { name: "Ad Account Structure", icon: Waypoints },
     { name: "Account Auditing & Diagnosis", icon: Search },
     { name: "Data Analysis & Decision Making", icon: ChartSpline },
-    { name: "Funnel Building", icon: Waypoints },
     { name: "Testing & Learning Loops", icon: FlaskConical },
-    { name: "High Budget Management", icon: BarChart3 },
-    { name: "Controlled Scaling", icon: Gauge },
-    { name: "Spend Protection", icon: Gauge },
-    { name: "AI Power User", icon: Bot },
     { name: "Paid Media Strategy", icon: Target },
     { name: "Media Planning & Budget Allocation", icon: BarChart3 },
-    { name: "Campaign Architecture", icon: PanelTop },
-    { name: "Creative Strategy & Structural Testing", icon: FlaskConical },
     { name: "Performance Investigation", icon: Search },
-    { name: "Pattern Recognition & Anomaly Detection", icon: Gauge },
     { name: "Tracking & Attribution", icon: Tags },
     { name: "Dashboard & Reporting Automation", icon: Bot },
-    { name: "Landing Page & Funnel Analysis", icon: ChartSpline },
-    { name: "Naming, UTM & Measurement Governance", icon: Tags },
     { name: "Multi-Channel Paid Acquisition", icon: Target },
   ],
 
@@ -188,19 +183,43 @@ export const DATA = {
   toolGroups: [
     {
       label: "Advertising",
-      items: ["Meta Ads", "Snapchat Ads", "TikTok Ads", "Google Ads"],
+      items: [
+        { name: "Meta Ads", icon: "https://cdn.simpleicons.org/meta/0866FF" },
+        { name: "Snapchat Ads", icon: "https://cdn.simpleicons.org/snapchat/FFFC00" },
+        { name: "TikTok Ads", icon: "https://cdn.simpleicons.org/tiktok/000000" },
+        { name: "Google Ads", icon: "https://cdn.simpleicons.org/googleads/4285F4" },
+      ],
     },
     {
       label: "Tracking & Analytics",
-      items: ["Meta Pixel", "GTM", "GA4", "Conversion API", "Microsoft Clarity", "AppsFlyer — Basic"],
+      items: [
+        { name: "Meta Pixel", icon: "https://cdn.simpleicons.org/meta/0866FF" },
+        { name: "GTM", icon: "https://cdn.simpleicons.org/googletagmanager/246FDB" },
+        { name: "GA4", icon: "https://cdn.simpleicons.org/googleanalytics/E37400" },
+        { name: "Conversion API", icon: "https://cdn.simpleicons.org/meta/0866FF" },
+        { name: "Clarity", icon: "https://cdn.simpleicons.org/microsoft/5E5E5E" },
+        { name: "AppsFlyer", icon: "https://cdn.simpleicons.org/appsflyer/000000" },
+      ],
     },
     {
       label: "Data & Reporting",
-      items: ["Google Sheets", "Apps Script", "BigQuery"],
+      items: [
+        { name: "Google Sheets", icon: "https://cdn.simpleicons.org/googlesheets/34A853" },
+        { name: "Apps Script", icon: "https://cdn.simpleicons.org/google/4285F4" },
+        { name: "BigQuery", icon: "https://cdn.simpleicons.org/googlebigquery/4285F4" },
+      ],
     },
     {
       label: "Automation & AI",
-      items: ["Make", "Zapier", "n8n", "ChatGPT", "Claude", "Gemini", "Custom MCP Integrations"],
+      items: [
+        { name: "Make", icon: "https://cdn.simpleicons.org/make/6D00CC" },
+        { name: "Zapier", icon: "https://cdn.simpleicons.org/zapier/FF4F00" },
+        { name: "n8n", icon: "https://cdn.simpleicons.org/n8n/EA4B71" },
+        { name: "ChatGPT", icon: "https://cdn.simpleicons.org/openai/000000" },
+        { name: "Claude", icon: "https://cdn.simpleicons.org/anthropic/191919" },
+        { name: "Gemini", icon: "https://cdn.simpleicons.org/googlegemini/8E75B2" },
+        { name: "Custom MCP", icon: "https://cdn.simpleicons.org/openai/000000" },
+      ],
     },
   ],
 
