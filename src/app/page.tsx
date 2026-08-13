@@ -10,6 +10,13 @@ import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 
 const BLUR_FADE_DELAY = 0.04;
 
+const AD_PLATFORM_ICONS: Record<string, string> = {
+  "Meta Ads": "https://cdn.simpleicons.org/meta/0866FF",
+  "Snapchat Ads": "https://cdn.simpleicons.org/snapchat/FFFC00",
+  "TikTok Ads": "https://cdn.simpleicons.org/tiktok/000000",
+  "Google Ads": "https://cdn.simpleicons.org/googleads/4285F4",
+};
+
 export default function Page() {
   return (
     <main className="min-h-dvh flex flex-col gap-14 relative">
@@ -50,7 +57,7 @@ export default function Page() {
             </div>
 
             <BlurFade delay={BLUR_FADE_DELAY} className="order-1 md:order-2">
-              <Avatar className="size-24 md:size-32 border rounded-full shadow-lg ring-4 ring-muted">
+              <Avatar className="size-24 md:size-32 border rounded-full shadow-lg ring-4 ring-muted transition-transform duration-300 hover:scale-[1.02]">
                 <AvatarImage src={DATA.avatarUrl} alt={DATA.name} className="object-cover" />
                 <AvatarFallback className="text-2xl md:text-3xl font-semibold tracking-tight">
                   {DATA.initials}
@@ -93,7 +100,7 @@ export default function Page() {
           <div className="flex flex-wrap gap-2.5">
             {DATA.skills.map((skill, id) => (
               <BlurFade key={skill.name} delay={BLUR_FADE_DELAY * 8 + id * 0.025}>
-                <div className="border bg-background border-border ring-2 ring-border/20 rounded-full min-h-9 w-fit px-4 py-2 flex items-center gap-2">
+                <div className="border bg-background border-border ring-2 ring-border/20 rounded-full min-h-9 w-fit px-4 py-2 flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm hover:ring-border/40">
                   <skill.icon className="size-4 text-muted-foreground" />
                   <span className="text-foreground text-sm font-medium">{skill.name}</span>
                 </div>
@@ -114,8 +121,8 @@ export default function Page() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {DATA.brands.map((brand, index) => (
               <BlurFade key={brand.name} delay={BLUR_FADE_DELAY * 10 + index * 0.04}>
-                <div className="h-28 rounded-xl border bg-white p-4 ring-2 ring-border/20 flex flex-col items-center justify-center gap-3 overflow-hidden">
-                  <img src={brand.logo} alt={`${brand.name} logo`} loading="lazy" className="max-h-12 max-w-[120px] object-contain" />
+                <div className="h-28 rounded-xl border bg-white p-4 ring-2 ring-border/20 flex flex-col items-center justify-center gap-3 overflow-hidden transition-all duration-250 hover:-translate-y-1 hover:shadow-md">
+                  <img src={brand.logo} alt={`${brand.name} logo`} loading="lazy" className="max-h-12 max-w-[120px] object-contain transition-transform duration-250 hover:scale-[1.04]" />
                   <span className="text-[11px] font-medium text-neutral-600 text-center">{brand.name}</span>
                 </div>
               </BlurFade>
@@ -139,7 +146,7 @@ export default function Page() {
                   href={image}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group block min-w-[280px] sm:min-w-[360px] snap-start overflow-hidden rounded-xl border bg-card ring-2 ring-border/20"
+                  className="group block min-w-[280px] sm:min-w-[360px] snap-start overflow-hidden rounded-xl border bg-card ring-2 ring-border/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
                 >
                   <div className="aspect-[16/10] bg-muted/30 overflow-hidden">
                     <img
@@ -151,7 +158,7 @@ export default function Page() {
                   </div>
                   <div className="flex items-center justify-between gap-3 px-3 py-2.5">
                     <span className="text-xs font-medium">Performance Snapshot {String(index + 1).padStart(2, "0")}</span>
-                    <ArrowUpRight className="size-3.5 text-muted-foreground" />
+                    <ArrowUpRight className="size-3.5 text-muted-foreground transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </div>
                 </a>
               </BlurFade>
@@ -168,7 +175,7 @@ export default function Page() {
           <div className="grid sm:grid-cols-2 gap-3">
             {DATA.systems.map((system, index) => (
               <BlurFade key={system.title} delay={BLUR_FADE_DELAY * 14 + index * 0.05}>
-                <div className="h-full rounded-xl border bg-card p-4 ring-2 ring-border/20">
+                <div className="h-full rounded-xl border bg-card p-4 ring-2 ring-border/20 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm">
                   <h3 className="font-semibold text-sm">{system.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{system.description}</p>
                 </div>
@@ -189,11 +196,23 @@ export default function Page() {
                 <div className="grid gap-2 sm:grid-cols-[150px_1fr]">
                   <p className="text-sm font-semibold">{group.label}</p>
                   <div className="flex flex-wrap gap-1.5">
-                    {group.items.map((item) => (
-                      <span key={item} className="rounded-lg border bg-muted/30 px-2.5 py-1 text-xs text-muted-foreground">
-                        {item}
-                      </span>
-                    ))}
+                    {group.items.map((item) => {
+                      const platformIcon = group.label === "Advertising" ? AD_PLATFORM_ICONS[item] : undefined;
+
+                      return (
+                        <span
+                          key={item}
+                          className="rounded-lg border bg-muted/30 px-2.5 py-1 text-xs text-muted-foreground inline-flex items-center gap-1.5 transition-all duration-200 hover:-translate-y-0.5 hover:bg-muted/60 hover:text-foreground"
+                        >
+                          {platformIcon ? (
+                            <span className="flex size-5 items-center justify-center rounded-md bg-white ring-1 ring-black/5">
+                              <img src={platformIcon} alt="" className="size-3.5 object-contain" />
+                            </span>
+                          ) : null}
+                          {item}
+                        </span>
+                      );
+                    })}
                   </div>
                 </div>
               </BlurFade>
@@ -209,7 +228,7 @@ export default function Page() {
               <h2 className="text-xl font-bold">Markets</h2>
               <div className="flex flex-wrap gap-1.5">
                 {DATA.markets.map((market) => (
-                  <span key={market} className="rounded-lg border px-2.5 py-1 text-xs text-muted-foreground">{market}</span>
+                  <span key={market} className="rounded-lg border px-2.5 py-1 text-xs text-muted-foreground transition-colors duration-200 hover:bg-muted/40 hover:text-foreground">{market}</span>
                 ))}
               </div>
             </div>
@@ -219,7 +238,7 @@ export default function Page() {
               <h2 className="text-xl font-bold">Industries</h2>
               <div className="flex flex-wrap gap-1.5">
                 {DATA.industries.map((industry) => (
-                  <span key={industry} className="rounded-lg border px-2.5 py-1 text-xs text-muted-foreground">{industry}</span>
+                  <span key={industry} className="rounded-lg border px-2.5 py-1 text-xs text-muted-foreground transition-colors duration-200 hover:bg-muted/40 hover:text-foreground">{industry}</span>
                 ))}
               </div>
             </div>
@@ -261,7 +280,7 @@ export default function Page() {
           <div className="grid sm:grid-cols-2 gap-2 pt-1">
             {DATA.additional.map((item, index) => (
               <BlurFade key={item.label} delay={BLUR_FADE_DELAY * 21 + index * 0.04}>
-                <div className="rounded-xl border p-3">
+                <div className="rounded-xl border p-3 transition-colors duration-200 hover:bg-muted/30">
                   <p className="text-xs font-medium text-muted-foreground">{item.label}</p>
                   <p className="mt-1 text-sm font-medium">{item.value}</p>
                 </div>
