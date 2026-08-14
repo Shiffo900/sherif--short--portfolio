@@ -8,6 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { DATA } from "@/data/resume";
+import { BriefcaseBusiness } from "lucide-react";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -17,13 +18,6 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
-function FacebookIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
-      <path d="M13.5 22v-9h3l.45-3H13.5V8.08c0-.87.24-1.46 1.52-1.46H17V3.94c-.34-.05-1.5-.14-2.85-.14-2.82 0-4.75 1.72-4.75 4.88V10H6.2v3h3.2v9h4.1Z" />
-    </svg>
-  );
-}
 
 const extraSocials = [
   {
@@ -32,9 +26,9 @@ const extraSocials = [
     icon: WhatsAppIcon,
   },
   {
-    label: "Facebook",
-    href: "https://www.facebook.com/sherifsaadsofiy",
-    icon: FacebookIcon,
+    label: "Full Portfolio",
+    href: "https://sherifseniormediabuyer-shiffo900s-projects.vercel.app/",
+    icon: BriefcaseBusiness,
   },
 ];
 
