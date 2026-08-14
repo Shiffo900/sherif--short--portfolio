@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import type { Metadata } from "next";
 
 const caseStudies = {
   "travel-growth": {
@@ -120,6 +121,18 @@ const caseStudies = {
 
 export function generateStaticParams() {
   return Object.keys(caseStudies).map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const study = caseStudies[slug as keyof typeof caseStudies];
+  if (!study) return {};
+  return {
+    title: study.title,
+    description: `${study.meta}. ${study.intro}`,
+    alternates: { canonical: `/case-studies/${slug}` },
+    openGraph: { title: study.title, description: study.intro, type: "article" },
+  };
 }
 
 export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
