@@ -33,13 +33,11 @@ export default function ContactSection() {
           </p>
 
           <h2 className="mt-3 max-w-md text-2xl font-semibold tracking-tight sm:text-3xl">
-            Open to the right performance opportunity.
+            Bring me the performance problem.
           </h2>
 
           <p className="mt-3 max-w-lg text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
-            I&apos;m open to senior performance marketing roles where paid media,
-            structured experimentation, measurement, and automation work together
-            to drive business growth.
+            Hiring for a senior performance role, building a paid acquisition system, or diagnosing stalled growth? Send me the context, the goal, and the numbers that matter.
           </p>
 
           <div className="mt-5 flex flex-wrap items-center gap-2">
@@ -48,7 +46,7 @@ export default function ContactSection() {
               className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90"
             >
               <Mail className="size-4" />
-              Email Me
+              Start a Conversation
             </Link>
 
             <Link
