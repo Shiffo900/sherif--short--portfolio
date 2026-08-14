@@ -9,7 +9,7 @@ export default function ResultsSection() {
         <div className="pointer-events-none absolute -right-20 -top-24 size-64 rounded-full bg-gradient-to-br from-sky-400/15 via-violet-400/10 to-transparent blur-2xl transition-transform duration-700 group-hover:scale-125" />
         <BlurFade delay={0.04 * 15}>
           <div>
-            <p className="text-xs uppercase tracking-[0.26em] text-muted-foreground font-medium">Performance Evidence</p>
+            <p className="text-xs uppercase tracking-[0.26em] text-muted-foreground font-medium">Proof</p>
             <h2 className="mt-2 text-xl font-bold">Performance Evidence</h2>
             <p className="mt-1 max-w-xl text-sm leading-relaxed text-foreground/65">
               Open the full portfolio to review protected campaign screenshots and the evidence behind the case studies.
