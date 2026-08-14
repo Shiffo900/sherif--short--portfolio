@@ -11,7 +11,7 @@ import {
 
 export default function ContactSection() {
   return (
-    <div className="relative overflow-hidden rounded-2xl border bg-card p-6 sm:p-8">
+    <div className="group relative overflow-hidden rounded-3xl border bg-card p-6 sm:p-8 transition-all duration-500 hover:border-foreground/15 hover:shadow-[0_24px_70px_-45px_rgba(0,0,0,.55)]">
       <div className="pointer-events-none absolute -right-10 -top-14 h-56 w-72 opacity-35">
         <FlickeringGrid
           className="h-full w-full"
@@ -43,7 +43,7 @@ export default function ContactSection() {
           <div className="mt-5 flex flex-wrap items-center gap-2">
             <Link
               href={`mailto:${DATA.contact.email}`}
-              className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90"
+              className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
             >
               <Mail className="size-4" />
               Start a Conversation
@@ -57,7 +57,7 @@ export default function ContactSection() {
             >
               <Linkedin className="size-4" />
               LinkedIn
-              <ArrowUpRight className="size-3.5 text-muted-foreground" />
+              <ArrowUpRight className="size-3.5 text-muted-foreground transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
           </div>
         </div>
