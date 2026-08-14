@@ -8,14 +8,15 @@ import ContactSection from "@/components/section/contact-section";
 import WorkSection from "@/components/section/work-section";
 import CaseStudiesSection from "@/components/section/case-studies-section";
 import ResultsSection from "@/components/section/results-section";
-import { ArrowUpRight, Download, ExternalLink, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowUpRight, BarChart3, Download, ExternalLink, Mail, MapPin, Phone, Radar, Route, Workflow } from "lucide-react";
 import ToolIcon from "@/components/tool-icon";
 
 const BLUR_FADE_DELAY = 0.04;
+const SYSTEM_ICONS = [BarChart3, Radar, Route, Workflow] as const;
 
 export default function Page() {
   return (
-    <main className="min-h-dvh flex flex-col gap-12 relative">
+    <main className="min-h-dvh flex flex-col gap-14 sm:gap-16 relative">
       <section id="hero">
         <div className="mx-auto w-full max-w-2xl space-y-8">
           <div className="gap-5 gap-y-6 flex flex-col md:flex-row justify-between">
@@ -141,15 +142,22 @@ export default function Page() {
             </div>
           </BlurFade>
 
-          <div className="grid gap-2 sm:grid-cols-2">
-            {DATA.systems.map((system, index) => (
+          <div className="grid gap-3 sm:grid-cols-2">
+            {DATA.systems.map((system, index) => {
+              const SystemIcon = SYSTEM_ICONS[index] ?? Workflow;
+              return (
               <BlurFade key={system.title} delay={BLUR_FADE_DELAY * 20 + index * 0.035}>
-                <div className="h-full rounded-xl border bg-card p-3.5 ring-1 ring-border/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-muted/20">
-                  <h3 className="text-sm font-semibold">{system.title}</h3>
-                  <p className="mt-1 text-xs leading-relaxed text-foreground/65">{system.description}</p>
+                <div className="group h-full rounded-2xl border bg-card p-4 ring-1 ring-border/20 transition-all duration-300 hover:-translate-y-1 hover:border-foreground/15 hover:shadow-[0_16px_45px_-34px_rgba(0,0,0,.55)]">
+                  <div className="flex items-start justify-between gap-4">
+                    <span className="grid size-9 shrink-0 place-items-center rounded-xl border bg-muted/35 transition-all duration-300 group-hover:scale-105 group-hover:bg-foreground group-hover:text-background"><SystemIcon className="size-4" /></span>
+                    <span className="font-mono text-[10px] tracking-[0.18em] text-muted-foreground">0{index + 1}</span>
+                  </div>
+                  <h3 className="mt-4 text-sm font-semibold">{system.title}</h3>
+                  <p className="mt-1.5 text-xs leading-relaxed text-foreground/65">{system.description}</p>
                 </div>
               </BlurFade>
-            ))}
+              );
+            })}
           </div>
 
           <div className="flex flex-col gap-4 border-t pt-5">
@@ -159,7 +167,7 @@ export default function Page() {
                   <p className="text-sm font-semibold">{group.label}</p>
                   <div className="flex flex-wrap gap-1.5">
                     {group.items.map((item) => (
-                      <span key={item.name} className="inline-flex items-center gap-1.5 rounded-lg border bg-muted/25 px-2.5 py-1 text-xs text-foreground/70 transition-all duration-200 hover:-translate-y-0.5 hover:bg-muted/55 hover:text-foreground">
+                      <span key={item.name} className="inline-flex items-center gap-1.5 rounded-full border bg-muted/20 px-2.5 py-1.5 text-xs text-foreground/70 transition-all duration-300 hover:-translate-y-0.5 hover:border-foreground/15 hover:bg-background hover:text-foreground hover:shadow-sm">
                         <ToolIcon src={item.icon} name={item.name} />
                         {item.name}
                       </span>
