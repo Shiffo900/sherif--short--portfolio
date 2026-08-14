@@ -9,6 +9,7 @@ import "./globals.css";
 import "./portfolio-motion.css";
 import "./hero-actions.css";
 import { FlickeringGrid } from "@/components/magicui/flickering-grid";
+import ScrollProgress from "@/components/scroll-progress";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -72,6 +73,7 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="light">
           <TooltipProvider delayDuration={0}>
+            <ScrollProgress />
             <div className="absolute inset-0 top-0 left-0 right-0 h-[100px] overflow-hidden z-0">
               <FlickeringGrid
                 className="h-full w-full"
