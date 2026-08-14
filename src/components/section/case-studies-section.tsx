@@ -73,7 +73,8 @@ export default function CaseStudiesSection() {
 
       <div className="grid gap-3">
         {cases.map((study) => (
-          <article key={study.id} className="rounded-xl border bg-card p-4 ring-1 ring-border/20 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm">
+          <article key={study.id} className="group relative overflow-hidden rounded-2xl border bg-card p-4 sm:p-5 ring-1 ring-border/20 transition-all duration-300 hover:-translate-y-1 hover:border-foreground/15 hover:shadow-[0_18px_50px_-32px_rgba(0,0,0,.45)]">
+            <div className="absolute inset-y-5 left-0 w-0.5 rounded-full bg-foreground/0 transition-colors duration-300 group-hover:bg-foreground/70" />
             <div className="flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
               <span className="font-mono text-primary">Case {study.id}</span>
               <span>·</span>
@@ -85,15 +86,15 @@ export default function CaseStudiesSection() {
 
             <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
               {study.metrics.map((metric) => (
-                <div key={metric.label} className="rounded-lg border bg-background/70 px-2.5 py-2">
+                <div key={metric.label} className="rounded-xl border bg-background/70 px-2.5 py-2.5 transition-all duration-300 group-hover:border-foreground/10 group-hover:bg-muted/25">
                   <p className="text-sm font-semibold tracking-tight">{metric.value}</p>
                   <p className="mt-0.5 text-[9px] uppercase tracking-[0.12em] text-muted-foreground">{metric.label}</p>
                 </div>
               ))}
             </div>
 
-            <Link href={study.href} className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-foreground transition-colors hover:text-primary">
-              View Case Study <ArrowUpRight className="size-3.5" />
+            <Link href={study.href} className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-foreground">
+              View Case Study <span className="grid size-6 place-items-center rounded-full border bg-background transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:bg-foreground group-hover:text-background"><ArrowUpRight className="size-3.5" /></span>
             </Link>
           </article>
         ))}
