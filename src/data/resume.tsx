@@ -11,7 +11,7 @@ import {
   BarChart3,
 } from "lucide-react";
 
-const LEGACY_ASSET_BASE = "https://charm-component-cloud.vercel.app/assets";
+const LEGACY_ASSET_BASE = "https://sherifseniormediabuyer-shiffo900s-projects.vercel.app/assets";
 
 export const DATA = {
   name: "Sherif Saad Sofiu",
@@ -22,7 +22,7 @@ export const DATA = {
   description:
     "Senior Performance Media Buyer · Paid Media Strategy · Structured Experimentation · Full-Funnel Optimization",
   summary:
-    "Business-minded Senior Performance Media Buyer with hands-on paid acquisition experience across GCC and North African markets. Specialized in Meta and Snapchat Ads, with additional experience across TikTok and Google Ads. I work across education, travel, e-commerce, dropshipping, and mobile app businesses — combining business and advertising audits, full-funnel planning, structured experimentation, performance investigation, and hands-on campaign optimization.",
+    "I build paid media systems that turn ad spend into measurable, scalable growth. My work connects strategy, structured experimentation, measurement, and hands-on execution across GCC and North African markets.",
   avatarUrl: `${LEGACY_ASSET_BASE}/profile-sherif-CRWGRfaV.jpg`,
 
   channels: [
@@ -52,7 +52,7 @@ export const DATA = {
     { name: "Mother Planet", logo: `${LEGACY_ASSET_BASE}/motherplanet-D_ChjyQs.jpg` },
     { name: "Amazon Tours", logo: `${LEGACY_ASSET_BASE}/amazontours-B4Al5bwM.png` },
     { name: "Sleep Well", logo: `${LEGACY_ASSET_BASE}/sleepwell-DG5s7eYE.jpg` },
-    { name: "Montad Travel", logo: `${LEGACY_ASSET_BASE}/mentad-B4Z650zF.jpg` },
+    { name: "Mentad", logo: `${LEGACY_ASSET_BASE}/mentad-B4Z650zF.jpg` },
   ],
 
   resultScreenshots: [
@@ -151,7 +151,7 @@ export const DATA = {
       title: "Media Buyer",
       logoUrl: "",
       start: "2021",
-      end: "2021",
+      end: "",
       description:
         "Managed small-budget paid advertising campaigns for local brands, building hands-on foundations in campaign setup, targeting, creative coordination, monitoring, optimization, and reporting.",
     },
