@@ -27,12 +27,9 @@ export default function Page() {
                 </div>
               </BlurFade>
 
-              <BlurFadeText
-                delay={BLUR_FADE_DELAY * 2}
-                className="text-3xl font-semibold tracking-tighter sm:text-4xl lg:text-5xl"
-                yOffset={8}
-                text={DATA.name}
-              />
+              <BlurFade delay={BLUR_FADE_DELAY * 2} inView={false}>
+                <h1 className="text-3xl font-semibold tracking-tighter sm:text-4xl lg:text-5xl">{DATA.name}</h1>
+              </BlurFade>
 
               <BlurFadeText
                 className="text-foreground max-w-[620px] text-lg md:text-xl font-medium leading-snug"
