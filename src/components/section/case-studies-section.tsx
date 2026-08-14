@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import type { MouseEvent } from "react";
 
 const cases = [
   {
@@ -63,6 +64,12 @@ const cases = [
 ] as const;
 
 export default function CaseStudiesSection() {
+  const moveSpotlight = (event: MouseEvent<HTMLElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty("--spotlight-x", `${event.clientX - rect.left}px`);
+    event.currentTarget.style.setProperty("--spotlight-y", `${event.clientY - rect.top}px`);
+  };
+
   return (
     <div id="case-studies" className="mt-12 border-t pt-10">
       <div className="mb-5">
@@ -73,7 +80,8 @@ export default function CaseStudiesSection() {
 
       <div className="grid gap-3">
         {cases.map((study) => (
-          <article key={study.id} className="group relative overflow-hidden rounded-2xl border bg-card p-4 sm:p-5 ring-1 ring-border/20 transition-all duration-300 hover:-translate-y-1 hover:border-foreground/15 hover:shadow-[0_18px_50px_-32px_rgba(0,0,0,.45)]">
+          <article key={study.id} onMouseMove={moveSpotlight} className="case-spotlight group relative overflow-hidden rounded-2xl border bg-card p-4 sm:p-5 ring-1 ring-border/20 transition-all duration-300 hover:-translate-y-1 hover:border-foreground/15 hover:shadow-[0_18px_50px_-32px_rgba(0,0,0,.45)]">
+            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 [background:radial-gradient(260px_circle_at_var(--spotlight-x,50%)_var(--spotlight-y,50%),color-mix(in_oklab,var(--foreground)_7%,transparent),transparent_72%)]" />
             <div className="absolute inset-y-5 left-0 w-0.5 rounded-full bg-foreground/0 transition-colors duration-300 group-hover:bg-foreground/70" />
             <div className="flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
               <span className="font-mono text-primary">Case {study.id}</span>
