@@ -1,72 +1,30 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import BlurFade from "@/components/magicui/blur-fade";
-import { DATA } from "@/data/resume";
-
-const RESULTS = DATA.resultScreenshots;
 
 export default function ResultsSection() {
   return (
     <section id="results" className="overflow-hidden">
-      <style>{`
-        #brands img {
-          max-height: 3.5rem !important;
-          max-width: 7.5rem !important;
-          filter: contrast(1.12) saturate(1.08);
-        }
-        #brands img[src*="modrk"] {
-          transform: scale(1.35);
-          filter: contrast(1.45) saturate(1.25) brightness(0.92);
-        }
-      `}</style>
-
-      <div className="flex min-h-0 flex-col gap-y-5">
+      <div className="flex min-h-0 flex-col gap-y-4 rounded-2xl border bg-card p-5 sm:p-6">
         <BlurFade delay={0.04 * 15}>
           <div>
             <p className="text-xs uppercase tracking-[0.26em] text-muted-foreground font-medium">Performance Evidence</p>
-            <h2 className="mt-2 text-xl font-bold">Campaign Screenshots</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              All 15 performance screenshots are kept in one standalone evidence section, separate from the case studies.
+            <h2 className="mt-2 text-xl font-bold">Performance Evidence</h2>
+            <p className="mt-1 max-w-xl text-sm leading-relaxed text-foreground/65">
+              Open the full portfolio to review protected campaign screenshots and the evidence behind the case studies.
             </p>
-          </div>
-        </BlurFade>
-
-        <BlurFade delay={0.04 * 16}>
-          <div className="results-marquee relative overflow-hidden -mx-2 px-2">
-            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-background to-transparent" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-background to-transparent" />
-            <div className="results-marquee-track flex w-max items-start gap-3 py-2">
-              {[...RESULTS, ...RESULTS].map((image, index) => (
-                <div
-                  key={`${image}-${index}`}
-                  aria-hidden={index >= RESULTS.length}
-                  className="group block w-[360px] sm:w-[460px] shrink-0 overflow-hidden rounded-xl border bg-card ring-1 ring-border/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
-                >
-                  <div className="bg-muted/20 overflow-hidden">
-                    <img
-                      src={image}
-                      alt={index < RESULTS.length ? `Campaign performance screenshot ${index + 1}` : ""}
-                      loading="lazy"
-                      className="block h-auto w-full object-contain object-top"
-                    />
-                  </div>
-                  <div className="px-3 py-2.5">
-                    <p className="text-[9px] uppercase tracking-[0.18em] text-muted-foreground">Evidence</p>
-                    <span className="text-xs font-medium">Performance Snapshot {String((index % RESULTS.length) + 1).padStart(2, "0")}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </BlurFade>
 
         <BlurFade delay={0.04 * 17}>
           <Link
-            href="/results"
-            className="inline-flex w-fit items-center gap-2 rounded-full border bg-background px-4 py-2 text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm"
+            href="https://sherifseniormediabuyer-shiffo900s-projects.vercel.app/#results"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex w-fit items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition-all duration-200 hover:-translate-y-0.5 hover:opacity-90"
           >
-            View All Screenshots
-            <ArrowRight className="size-4" />
+            View Performance Evidence
+            <ArrowUpRight className="size-4" />
           </Link>
         </BlurFade>
       </div>
