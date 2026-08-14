@@ -11,6 +11,7 @@ export function ModeToggle({ className }: { className?: string }) {
   return (
     <Button
       type="button"
+      aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
       variant="link"
       size="icon"
       className={cn(className)}
