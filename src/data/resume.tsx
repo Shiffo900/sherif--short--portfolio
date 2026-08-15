@@ -81,7 +81,7 @@ export const DATA = {
     social: {
       LinkedIn: {
         name: "LinkedIn",
-        url: "https://www.linkedin.com/in/sherif-saad-8ba782302/",
+        url: "https://www.linkedin.com/in/sherif-saad-growth/",
         icon: Icons.linkedin,
         navbar: true,
       },
