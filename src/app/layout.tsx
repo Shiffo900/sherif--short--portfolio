@@ -25,7 +25,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(DATA.url),
-  category: "portfolio",\n  icons: { icon: "/favicon.svg?v=1", shortcut: "/favicon.svg?v=1" },
+  category: "portfolio",
+  icons: { icon: "/favicon.svg?v=1", shortcut: "/favicon.svg?v=1" },
   alternates: { canonical: "/" },
   title: {
     default: "Sherif Saad Sofiu — Senior Performance Media Buyer",
