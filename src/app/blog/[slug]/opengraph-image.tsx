@@ -4,7 +4,7 @@ import { ImageResponse } from "next/og";
 import { allPosts } from "content-collections";
 import { DATA } from "@/data/resume";
 
-export const runtime = "edge";
+export const runtime = "edge";\nexport const dynamic = "force-static";
 
 export const alt = "Blog Post";
 export const size = {
