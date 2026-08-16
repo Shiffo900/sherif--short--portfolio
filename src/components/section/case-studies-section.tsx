@@ -61,6 +61,20 @@ const cases = [
       { label: "New-Customer Revenue", value: "$100K" },
     ],
   },
+  {
+    id: "05",
+    eyebrow: "Mobile App Acquisition",
+    title: "Modrk — Mobile App Acquisition",
+    role: "Senior Performance Media Buyer",
+    meta: "Saudi Arabia · 2025 · Snapchat, Meta, TikTok & Google Ads",
+    href: "/case-studies/modrk-app-acquisition",
+    metrics: [
+      { label: "Installs", value: "1,586" },
+      { label: "Cost / Install", value: "3.49 SAR" },
+      { label: "Installs vs Target", value: "+59%" },
+      { label: "CPI vs Target", value: "-42%" },
+    ],
+  },
 ] as const;
 
 export default function CaseStudiesSection() {
@@ -75,7 +89,7 @@ export default function CaseStudiesSection() {
       <div className="mb-5">
         <p className="text-xs uppercase tracking-[0.26em] text-muted-foreground font-medium">Selected Case Studies</p>
         <h2 className="mt-2 text-xl font-bold">Performance Work, Condensed</h2>
-        <p className="mt-1 text-sm text-muted-foreground">Four selected cases. Open any case for the full breakdown.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Five selected cases. Open any case for the full breakdown.</p>
       </div>
 
       <div className="grid gap-3">
