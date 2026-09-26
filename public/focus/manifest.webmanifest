@@ -1,0 +1,9 @@
+{
+  "name": "Shiffo Focus",
+  "short_name": "Focus",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f6fa",
+  "theme_color": "#f4f6fa",
+  "description": "Capture everything, choose only three outcomes, focus on one thing now."
+}
