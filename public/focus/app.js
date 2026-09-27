@@ -3,12 +3,13 @@
   const OLD_STORAGE = "shiffo_focus_v1";
   const MAX_MUST_WINS = 3;
   const MAX_TOMORROW = 3;
-  const VIEWS = ["today", "tomorrow", "pending", "waiting", "blocked", "done", "overdue"];
+  const VIEWS = ["projects", "today", "tomorrow", "pending", "waiting", "blocked", "done", "overdue"];
   const vaguePatterns = [/^work on\b/i,/^study\b/i,/^learn\b/i,/^think about\b/i,/^research\b/i,/^plan\b/i,/^fix\b/i,/^improve\b/i,/^check\b/i,/^review\b/i,/^اشتغل على\b/,/^اذاكر\b/,/^اتعلم\b/,/^افكر\b/,/^اخطط\b/,/^احسن\b/,/^راجع\b/,/^شوف\b/];
   const actionVerbs = /^(audit|launch|send|pause|build|write|call|create|compare|analyze|diagnose|update|publish|follow up|rewrite|test|prepare|finish|open|extract|clean|present|share|حدد|ابعت|راجع|حلل|شغل|اعمل|اكتب|كلم|جهز|اختبر|حدث|اطلع|اقفل|انشر|نظف|قارن)/i;
   const $ = id => document.getElementById(id);
   let state = loadState();
   let activeView = "today";
+  let selectedProjectId = null;
 
   function localDateKey(date = new Date()) {
     const y = date.getFullYear();
@@ -17,14 +18,17 @@
     return `${y}-${m}-${d}`;
   }
 
-  function tomorrowKey() {
-    const date = new Date();
-    date.setDate(date.getDate() + 1);
-    return localDateKey(date);
-  }
-
   function uid() {
     return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+  }
+
+  function normalizeProject(project) {
+    return {
+      id: project.id || uid(),
+      name: String(project.name || "Untitled project").trim(),
+      goal: project.goal || "",
+      createdAt: project.createdAt || Date.now()
+    };
   }
 
   function migrateOld(oldState) {
@@ -33,7 +37,7 @@
       tasks: tasks.map((task, index) => {
         const wasDone = Boolean(task.done);
         const oldBucket = task.bucket || "inbox";
-        const lane = wasDone ? "done" : oldBucket === "today" ? "today" : oldBucket === "later" ? "pending" : "pending";
+        const lane = wasDone ? "done" : oldBucket === "today" ? "today" : "pending";
         return {
           id: task.id || uid(),
           title: task.title || "Untitled task",
@@ -53,9 +57,12 @@
           order: Number.isFinite(task.order) ? task.order : index,
           createdAt: task.createdAt || Date.now(),
           completedOn: task.completedOn || null,
-          archived: Boolean(task.archived)
+          archived: Boolean(task.archived),
+          previousLane: "",
+          previousStatus: ""
         };
-      })
+      }),
+      projects: []
     };
   }
 
@@ -85,18 +92,35 @@
     };
   }
 
+  function deriveProjects(tasks, projects = []) {
+    const normalized = projects.map(normalizeProject);
+    const names = new Set(normalized.map(project => project.name.toLowerCase()));
+    tasks.forEach(task => {
+      const name = String(task.project || "").trim();
+      if (name && !names.has(name.toLowerCase())) {
+        normalized.push(normalizeProject({ name }));
+        names.add(name.toLowerCase());
+      }
+    });
+    return normalized.sort((a, b) => a.createdAt - b.createdAt);
+  }
+
   function loadState() {
     try {
       const current = JSON.parse(localStorage.getItem(STORAGE));
-      if (current?.tasks) return { tasks: current.tasks.map(normalizeTask) };
+      if (current?.tasks) {
+        const tasks = current.tasks.map(normalizeTask);
+        return { tasks, projects: deriveProjects(tasks, current.projects || []) };
+      }
       const old = JSON.parse(localStorage.getItem(OLD_STORAGE));
       if (old?.tasks) {
         const migrated = migrateOld(old);
+        migrated.projects = deriveProjects(migrated.tasks, []);
         localStorage.setItem(STORAGE, JSON.stringify(migrated));
         return migrated;
       }
     } catch (_) {}
-    return { tasks: [] };
+    return { tasks: [], projects: [] };
   }
 
   function saveState() {
@@ -121,6 +145,29 @@
     if (clean.length < 7) return true;
     if (vaguePatterns.some(pattern => pattern.test(clean))) return true;
     return !actionVerbs.test(clean) && clean.split(/\s+/).length < 4;
+  }
+
+  function getProjectById(id) {
+    return state.projects.find(project => project.id === id) || null;
+  }
+
+  function getProjectByName(name) {
+    const clean = String(name || "").trim().toLowerCase();
+    return state.projects.find(project => project.name.toLowerCase() === clean) || null;
+  }
+
+  function ensureProject(name) {
+    const clean = String(name || "").trim();
+    if (!clean) return null;
+    const existing = getProjectByName(clean);
+    if (existing) return existing;
+    const project = normalizeProject({ name: clean });
+    state.projects.push(project);
+    return project;
+  }
+
+  function projectTasks(projectName) {
+    return state.tasks.filter(task => !task.archived && task.project === projectName);
   }
 
   function openTasks() {
@@ -149,7 +196,7 @@
   }
 
   function completedToday() {
-    return state.tasks.filter(task => !task.archived && task.status === "Done" && task.completedOn === localDateKey()).sort((a,b) => b.createdAt - a.createdAt);
+    return state.tasks.filter(task => !task.archived && task.status === "Done" && task.completedOn === localDateKey()).sort((a, b) => b.createdAt - a.createdAt);
   }
 
   function activeFocus() {
@@ -160,7 +207,7 @@
   function taskMeta(task) {
     const parts = [];
     parts.push(`<span class="chip ${task.priority.toLowerCase()}">${escapeHtml(task.priority)}</span>`);
-    if (task.project) parts.push(`<span class="chip">${escapeHtml(task.project)}</span>`);
+    if (task.project) parts.push(`<span class="chip project-chip">${escapeHtml(task.project)}</span>`);
     parts.push(`<span class="chip status">${escapeHtml(task.status)}</span>`);
     if (task.deadline) parts.push(`<span>Due ${escapeHtml(task.deadline)}</span>`);
     if (task.waitingOn) parts.push(`<span class="chip waiting">Waiting: ${escapeHtml(task.waitingOn)}</span>`);
@@ -201,6 +248,90 @@
     return `<div class="${rowClass}"><div class="task-main"><div class="task-title">${escapeHtml(task.title)}</div><div class="task-meta">${taskMeta(task)}</div>${taskDetails(task)}${vague ? `<div class="clarify">Make this executable: Verb + Object + Outcome.</div>` : ""}</div><div class="task-actions">${contextualActions(task)}</div></div>`;
   }
 
+  function doneProjectTaskRow(task) {
+    return `<div class="task-row compact-row done"><div class="task-main"><div class="task-title">${escapeHtml(task.title)}</div><div class="task-meta"><span>${escapeHtml(task.completedOn || "")}</span>${taskMeta(task)}</div>${taskDetails(task)}</div><div class="task-actions"><button class="action-link" data-action="undo" data-id="${task.id}">Undo</button><button class="icon-btn" data-action="edit" data-id="${task.id}">⋯</button></div></div>`;
+  }
+
+  function renderProjectOptions() {
+    $("projectOptions").innerHTML = state.projects.map(project => `<option value="${escapeHtml(project.name)}"></option>`).join("");
+  }
+
+  function renderProjects() {
+    const grid = $("projectsGrid");
+    if (!state.projects.length) {
+      grid.innerHTML = `<div class="empty-list projects-empty">No projects yet. Create one, then attach tasks to it.</div>`;
+      $("projectDetailSection").hidden = true;
+      return;
+    }
+
+    grid.innerHTML = state.projects.map(project => {
+      const tasks = projectTasks(project.name);
+      const open = tasks.filter(task => task.status !== "Done");
+      const done = tasks.filter(task => task.status === "Done");
+      const blocked = open.filter(task => task.status === "Blocked").length;
+      const overdue = open.filter(isOverdue).length;
+      const selected = selectedProjectId === project.id ? " selected" : "";
+      return `<article class="project-card${selected}" data-project-card="${project.id}">
+        <div class="project-card-top">
+          <div><div class="project-name">${escapeHtml(project.name)}</div>${project.goal ? `<div class="project-goal">${escapeHtml(project.goal)}</div>` : `<div class="project-goal muted">No goal added yet.</div>`}</div>
+          <button class="icon-btn" data-project-action="edit" data-project-id="${project.id}" title="Edit project">⋯</button>
+        </div>
+        <div class="project-stats">
+          <div><strong>${tasks.length}</strong><span>Tasks</span></div>
+          <div><strong>${open.length}</strong><span>Open</span></div>
+          <div><strong>${done.length}</strong><span>Done</span></div>
+          <div><strong>${blocked + overdue}</strong><span>At risk</span></div>
+        </div>
+        <div class="project-actions">
+          <button class="subtle-btn" data-project-action="open" data-project-id="${project.id}">Open project</button>
+          <button class="primary-btn" data-project-action="task" data-project-id="${project.id}">+ Add task</button>
+        </div>
+      </article>`;
+    }).join("");
+
+    renderProjectDetail();
+  }
+
+  function renderProjectDetail() {
+    const project = getProjectById(selectedProjectId);
+    const section = $("projectDetailSection");
+    if (!project) {
+      section.hidden = true;
+      return;
+    }
+
+    const all = projectTasks(project.name).sort((a, b) => {
+      if (a.status === "Done" && b.status !== "Done") return 1;
+      if (a.status !== "Done" && b.status === "Done") return -1;
+      return byPriorityThenCreated(a, b);
+    });
+    const open = all.filter(task => task.status !== "Done");
+    const done = all.filter(task => task.status === "Done");
+    const overdue = open.filter(isOverdue).length;
+    const blocked = open.filter(task => task.status === "Blocked").length;
+
+    $("projectDetail").innerHTML = `<div class="project-detail-card">
+      <div class="project-detail-head">
+        <div>
+          <div class="eyebrow">Project workspace</div>
+          <h3>${escapeHtml(project.name)}</h3>
+          ${project.goal ? `<p>${escapeHtml(project.goal)}</p>` : ""}
+        </div>
+        <button class="primary-btn" data-project-action="task" data-project-id="${project.id}">+ Add task</button>
+      </div>
+      <div class="project-detail-metrics">
+        <span><strong>${all.length}</strong> total</span>
+        <span><strong>${open.length}</strong> open</span>
+        <span><strong>${done.length}</strong> done</span>
+        <span class="risk-text"><strong>${overdue}</strong> overdue</span>
+        <span class="risk-text"><strong>${blocked}</strong> blocked</span>
+      </div>
+      <div class="project-task-group"><div class="project-task-heading">Open tasks</div>${open.length ? open.map(task => taskRow(task)).join("") : `<div class="empty-list">No open tasks in this project.</div>`}</div>
+      <div class="project-task-group"><div class="project-task-heading">Completed</div>${done.length ? done.map(doneProjectTaskRow).join("") : `<div class="empty-list">Nothing completed yet.</div>`}</div>
+    </div>`;
+    section.hidden = false;
+  }
+
   function renderFocus() {
     const task = activeFocus();
     if (!task) {
@@ -226,11 +357,7 @@
 
   function renderDone() {
     const list = state.tasks.filter(task => !task.archived && task.status === "Done").sort((a,b) => String(b.completedOn || "").localeCompare(String(a.completedOn || "")) || b.createdAt - a.createdAt);
-    if (!list.length) {
-      $("doneList").innerHTML = `<div class="empty-list">No completed tasks yet. Close one loop.</div>`;
-      return;
-    }
-    $("doneList").innerHTML = list.map(task => `<div class="task-row compact-row done"><div class="task-main"><div class="task-title">${escapeHtml(task.title)}</div><div class="task-meta"><span>${escapeHtml(task.completedOn || "")}</span>${taskMeta(task)}</div>${taskDetails(task)}</div><div class="task-actions"><button class="action-link" data-action="undo" data-id="${task.id}">Undo</button><button class="icon-btn" data-action="edit" data-id="${task.id}">⋯</button></div></div>`).join("");
+    $("doneList").innerHTML = list.length ? list.map(doneProjectTaskRow).join("") : `<div class="empty-list">No completed tasks yet. Close one loop.</div>`;
   }
 
   function renderOverdue() {
@@ -250,7 +377,7 @@
     const done = completedToday();
     const openToday = state.tasks.filter(task => !task.archived && task.lane === "today" && task.status !== "Done");
     const tomorrow = tasksForLane("tomorrow").slice(0, MAX_TOMORROW);
-    const lines = section => section.length ? section.map(task => `- ${task.title}`).join("\n") : "- None";
+    const lines = section => section.length ? section.map(task => `- ${task.project ? `[${task.project}] ` : ""}${task.title}`).join("\n") : "- None";
     return `END OF DAY — ${localDateKey()}\n\nDone today:\n${lines(done)}\n\nStill open:\n${lines(openToday)}\n\nTomorrow's 3:\n${lines(tomorrow)}`;
   }
 
@@ -286,6 +413,7 @@
     const blocked = tasksForLane("blocked").length;
     $("overdueCount").textContent = overdue;
     $("blockedCount").textContent = blocked;
+    $("projectsCount").textContent = state.projects.length ? `· ${state.projects.length}` : "";
     $("tomorrowCount").textContent = tasksForLane("tomorrow").length ? `· ${tasksForLane("tomorrow").length}` : "";
     $("pendingCount").textContent = tasksForLane("pending").length ? `· ${tasksForLane("pending").length}` : "";
     $("waitingCount").textContent = tasksForLane("waiting").length ? `· ${tasksForLane("waiting").length}` : "";
@@ -296,6 +424,8 @@
   function render() {
     $("todayDate").textContent = new Intl.DateTimeFormat("en-US", { weekday: "long", month: "long", day: "numeric" }).format(new Date());
     renderCounters();
+    renderProjectOptions();
+    renderProjects();
     renderFocus();
     renderToday();
     renderLane("tomorrow", "tomorrowList");
@@ -346,13 +476,14 @@
     $("editFollowUp").value = "";
   }
 
-  function openNew(kind) {
+  function openNew(kind, projectName = "") {
     resetForm();
     $("taskDialogTitle").textContent = "New task";
+    $("editProject").value = projectName;
     if (kind === "mustwin") { $("editLane").value = "today"; $("editTaskType").value = "mustwin"; $("editPriority").value = "P1"; }
     if (kind === "quick") { $("editLane").value = "today"; $("editTaskType").value = "quick"; $("editPriority").value = "P3"; }
     if (kind === "tomorrow") { $("editLane").value = "tomorrow"; $("editTaskType").value = "normal"; }
-    if (kind === "pending") { $("editLane").value = "pending"; }
+    if (kind === "pending" || kind === "project-task") { $("editLane").value = "pending"; }
     if (kind === "waiting") { $("editLane").value = "waiting"; $("editStatus").value = "Waiting"; $("editSince").value = localDateKey(); }
     if (kind === "blocked") { $("editLane").value = "blocked"; $("editStatus").value = "Blocked"; $("editSince").value = localDateKey(); }
     setDependencyVisibility();
@@ -421,8 +552,10 @@
 
     const existing = state.tasks.find(task => task.id === id);
     const task = existing || normalizeTask({ id: uid(), createdAt: Date.now() });
+    const projectName = $("editProject").value.trim();
+    if (projectName) ensureProject(projectName);
     task.title = title;
-    task.project = $("editProject").value.trim();
+    task.project = projectName;
     task.priority = $("editPriority").value;
     task.lane = lane;
     task.status = status;
@@ -435,8 +568,7 @@
     task.waitingOn = $("editWaitingOn").value.trim();
     task.since = $("editSince").value;
     task.followUp = $("editFollowUp").value;
-    if (status === "Done") task.completedOn = task.completedOn || localDateKey();
-    else task.completedOn = null;
+    task.completedOn = status === "Done" ? (task.completedOn || localDateKey()) : null;
     if (!existing) state.tasks.push(task);
     $("taskDialog").close();
     saveState();
@@ -448,7 +580,7 @@
     state.tasks.push(normalizeTask({ id: uid(), title: clean, lane: "pending", status: "To Do", taskType: "normal", priority: "P2", createdAt: Date.now() }));
     $("quickAdd").value = "";
     saveState();
-    showToast("Captured to Pending. Clarify it when you decide to work on it.");
+    showToast("Captured to Pending. Add a project when you clarify it.");
   }
 
   function moveTask(id, lane, status = "To Do") {
@@ -493,6 +625,60 @@
     saveState();
   }
 
+  function openProjectDialog(id = "") {
+    const project = id ? getProjectById(id) : null;
+    $("editProjectId").value = project?.id || "";
+    $("projectName").value = project?.name || "";
+    $("projectGoal").value = project?.goal || "";
+    $("projectDialogTitle").textContent = project ? "Edit project" : "New project";
+    $("deleteProjectBtn").style.visibility = project ? "visible" : "hidden";
+    $("projectDialog").showModal();
+    setTimeout(() => $("projectName").focus(), 30);
+  }
+
+  function saveProjectFromForm(event) {
+    event.preventDefault();
+    const id = $("editProjectId").value;
+    const name = $("projectName").value.trim();
+    const goal = $("projectGoal").value.trim();
+    if (!name) return;
+    const duplicate = state.projects.find(project => project.name.toLowerCase() === name.toLowerCase() && project.id !== id);
+    if (duplicate) {
+      showToast("A project with this name already exists.");
+      return;
+    }
+    const existing = id ? getProjectById(id) : null;
+    if (existing) {
+      const oldName = existing.name;
+      existing.name = name;
+      existing.goal = goal;
+      if (oldName !== name) state.tasks.forEach(task => { if (task.project === oldName) task.project = name; });
+      selectedProjectId = existing.id;
+    } else {
+      const project = normalizeProject({ name, goal });
+      state.projects.push(project);
+      selectedProjectId = project.id;
+    }
+    $("projectDialog").close();
+    activeView = "projects";
+    saveState();
+  }
+
+  function deleteCurrentProject() {
+    const id = $("editProjectId").value;
+    const project = getProjectById(id);
+    if (!project) return;
+    const tasks = projectTasks(project.name);
+    if (tasks.length) {
+      showToast(`Move or delete the ${tasks.length} project task${tasks.length === 1 ? "" : "s"} first.`);
+      return;
+    }
+    state.projects = state.projects.filter(item => item.id !== id);
+    if (selectedProjectId === id) selectedProjectId = null;
+    $("projectDialog").close();
+    saveState();
+  }
+
   async function copyText(text, successMessage) {
     try {
       await navigator.clipboard.writeText(text);
@@ -522,6 +708,22 @@
       return;
     }
 
+    const projectButton = event.target.closest("[data-project-action]");
+    if (projectButton) {
+      const id = projectButton.dataset.projectId;
+      const project = getProjectById(id);
+      const action = projectButton.dataset.projectAction;
+      if (action === "open" && project) {
+        selectedProjectId = project.id;
+        activeView = "projects";
+        render();
+        setTimeout(() => $("projectDetailSection")?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+      }
+      if (action === "task" && project) openNew("project-task", project.name);
+      if (action === "edit" && project) openProjectDialog(project.id);
+      return;
+    }
+
     const actionButton = event.target.closest("[data-action]");
     if (!actionButton) return;
     const id = actionButton.dataset.id;
@@ -535,6 +737,11 @@
     if (action === "blocked") moveTask(id, "blocked", "Blocked");
     if (action === "start") moveTask(id, "today", "Doing");
   });
+
+  $("newProjectBtn").addEventListener("click", () => openProjectDialog());
+  $("projectForm").addEventListener("submit", saveProjectFromForm);
+  $("closeProjectBtn").addEventListener("click", () => $("projectDialog").close());
+  $("deleteProjectBtn").addEventListener("click", deleteCurrentProject);
 
   $("addBtn").addEventListener("click", () => quickCapture($("quickAdd").value));
   $("quickAdd").addEventListener("keydown", event => { if (event.key === "Enter") quickCapture(event.currentTarget.value); });
