@@ -4,43 +4,216 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#f4f6fa" />
-  <meta name="description" content="A deliberately small task system: capture everything, choose only three outcomes, focus on one thing now." />
+  <meta name="description" content="Shiffo Focus — a personal execution board built around must-wins, next actions and manager visibility." />
   <link rel="manifest" href="/focus/manifest.webmanifest" />
   <link rel="stylesheet" href="/focus/styles.css" />
   <title>Shiffo Focus</title>
 </head>
 <body>
   <div class="toast" id="toast"></div>
+
   <div class="app-shell">
     <main class="app">
       <section class="card main-card">
         <header class="topbar">
-          <div><div class="date" id="todayDate"></div><h1>Shiffo Focus</h1></div>
-          <button class="ghost-btn" id="resetDayBtn" title="Move unfinished Today tasks back to Inbox">Reset day</button>
+          <div>
+            <div class="date" id="todayDate"></div>
+            <h1>Shiffo Focus</h1>
+            <div class="subtitle">Personal Execution Board</div>
+          </div>
+          <button class="ghost-btn" id="managerSummaryBtn">Manager summary</button>
         </header>
+
+        <section class="metrics-grid" aria-label="Daily execution metrics">
+          <div class="metric-card"><span class="metric-value" id="mustWinCount">0 / 3</span><span class="metric-label">Must Wins</span></div>
+          <div class="metric-card"><span class="metric-value" id="doneCount">0</span><span class="metric-label">Done today</span></div>
+          <div class="metric-card"><span class="metric-value" id="overdueCount">0</span><span class="metric-label">Overdue</span></div>
+          <div class="metric-card"><span class="metric-value" id="blockedCount">0</span><span class="metric-label">Blocked</span></div>
+        </section>
+
+        <div class="priority-rule">
+          <span>Priority rule</span>
+          <strong>Risk → Revenue → Bottleneck → Manager Visibility → Everything else</strong>
+        </div>
+
         <nav class="summary" aria-label="Views">
           <button class="pill active" data-view="today">Today</button>
-          <button class="pill" data-view="inbox">Inbox <span id="inboxCount"></span></button>
-          <button class="pill" data-view="later">Later <span id="laterCount"></span></button>
+          <button class="pill" data-view="tomorrow">Tomorrow <span id="tomorrowCount"></span></button>
+          <button class="pill" data-view="pending">Pending <span id="pendingCount"></span></button>
+          <button class="pill" data-view="waiting">Waiting <span id="waitingCount"></span></button>
+          <button class="pill" data-view="blocked">Blocked <span id="blockedTabCount"></span></button>
           <button class="pill" data-view="done">Done</button>
+          <button class="pill danger-pill" data-view="overdue">Overdue <span id="overdueTabCount"></span></button>
         </nav>
-        <div class="status-strip">
-          <div class="status-copy"><strong id="todaySlots">0 / 3</strong> outcomes chosen · <span id="doneToday">0 done</span></div>
-          <div class="progress"><span id="progressFill"></span></div>
+
+        <div id="todayView" class="view-panel">
+          <section class="section">
+            <div class="section-head">
+              <div>
+                <div class="section-title">One thing now</div>
+                <div class="section-note">Finish the next useful action, not the whole universe.</div>
+              </div>
+            </div>
+            <div id="focusArea"></div>
+          </section>
+
+          <section class="section">
+            <div class="section-head">
+              <div>
+                <div class="section-title">Must Wins</div>
+                <div class="section-note">Maximum 3. These are the actions that reduce risk or move performance.</div>
+              </div>
+              <button class="mini-btn" data-new-kind="mustwin">+ Must Win</button>
+            </div>
+            <div class="timeline" id="mustWinList"></div>
+          </section>
+
+          <section class="section">
+            <div class="section-head">
+              <div>
+                <div class="section-title">Quick Tasks</div>
+                <div class="section-note">Small admin actions. They do not count toward your 3 Must Wins.</div>
+              </div>
+              <button class="mini-btn" data-new-kind="quick">+ Quick Task</button>
+            </div>
+            <div id="quickList"></div>
+          </section>
+
+          <section class="section eod-card">
+            <div class="section-head">
+              <div>
+                <div class="section-title">End of Day</div>
+                <div class="section-note">Close loops before you close the laptop.</div>
+              </div>
+              <button class="mini-btn" id="copyEodBtn">Copy</button>
+            </div>
+            <div id="eodSummary"></div>
+          </section>
         </div>
-        <div id="todayView">
-          <section class="section"><div class="section-head"><div><div class="section-title">One thing now</div><div class="section-note">Don’t optimize the whole day. Finish the next thing.</div></div></div><div id="focusArea"></div></section>
-          <section class="section"><div class="section-head"><div><div class="section-title">Today</div><div class="section-note">Maximum 3. Everything else waits.</div></div></div><div class="timeline" id="todayList"></div></section>
+
+        <div id="tomorrowView" class="view-panel" hidden>
+          <section class="section">
+            <div class="section-head">
+              <div><div class="section-title">Tomorrow</div><div class="section-note">Pre-select up to 3 real priorities so tomorrow starts with direction.</div></div>
+              <button class="mini-btn" data-new-kind="tomorrow">+ Tomorrow Task</button>
+            </div>
+            <div id="tomorrowList"></div>
+          </section>
         </div>
-        <div id="inboxView" hidden><section class="section"><div class="section-head"><div><div class="section-title">Inbox</div><div class="section-note">Capture first. Decide later.</div></div></div><div class="inbox-list" id="inboxList"></div></section></div>
-        <div id="laterView" hidden><section class="section"><div class="section-head"><div><div class="section-title">Later</div><div class="section-note">Not today ≠ never.</div></div></div><div class="later-list" id="laterList"></div></section></div>
-        <div id="doneView" hidden><section class="section"><div class="section-head"><div><div class="section-title">Done</div><div class="section-note">Proof that you are actually closing loops.</div></div></div><div id="doneList"></div></section></div>
-        <div class="footer-note">Capture everything → choose 3 → do 1.</div>
+
+        <div id="pendingView" class="view-panel" hidden>
+          <section class="section">
+            <div class="section-head">
+              <div><div class="section-title">Action Queue / Pending</div><div class="section-note">Important actions that are real, but not committed to today.</div></div>
+              <button class="mini-btn" data-new-kind="pending">+ Action</button>
+            </div>
+            <div id="pendingList"></div>
+          </section>
+        </div>
+
+        <div id="waitingView" class="view-panel" hidden>
+          <section class="section">
+            <div class="section-head">
+              <div><div class="section-title">Waiting</div><div class="section-note">Work that is waiting on someone else, with a follow-up date.</div></div>
+              <button class="mini-btn" data-new-kind="waiting">+ Waiting</button>
+            </div>
+            <div id="waitingList"></div>
+          </section>
+        </div>
+
+        <div id="blockedView" class="view-panel" hidden>
+          <section class="section">
+            <div class="section-head">
+              <div><div class="section-title">Blocked</div><div class="section-note">Separate a blocker from a personal execution failure.</div></div>
+              <button class="mini-btn" data-new-kind="blocked">+ Blocked</button>
+            </div>
+            <div id="blockedList"></div>
+          </section>
+        </div>
+
+        <div id="doneView" class="view-panel" hidden>
+          <section class="section">
+            <div class="section-head"><div><div class="section-title">Done</div><div class="section-note">Evidence of closed loops, including result and outcome.</div></div></div>
+            <div id="doneList"></div>
+          </section>
+        </div>
+
+        <div id="overdueView" class="view-panel" hidden>
+          <section class="section">
+            <div class="section-head"><div><div class="section-title">Overdue</div><div class="section-note">Deadline passed and the task is still open.</div></div></div>
+            <div id="overdueList"></div>
+          </section>
+        </div>
+
+        <div class="footer-note">Capture → Clarify → Choose 3 → Do 1 → Record the result.</div>
       </section>
     </main>
   </div>
-  <div class="bottom-capture"><div class="capture-inner"><input id="quickAdd" class="capture-input" type="text" autocomplete="off" placeholder="Add a task… e.g. Send campaign report" /><button class="add-btn" id="addBtn" aria-label="Add task">+</button></div></div>
-  <dialog id="taskDialog"><form method="dialog" class="modal" id="taskForm"><h2>Edit task</h2><input type="hidden" id="editId" /><div class="field"><label for="editTitle">Task</label><input id="editTitle" required maxlength="140" /></div><div class="field"><label for="editCategory">Category</label><select id="editCategory"><option>Work</option><option>Growth</option><option>Personal</option></select></div><div class="field"><label for="editEstimate">Estimate</label><select id="editEstimate"><option value="">No estimate</option><option value="15m">15m</option><option value="30m">30m</option><option value="45m">45m</option><option value="60m">60m</option><option value="90m">90m</option></select></div><div class="modal-actions"><button type="button" class="danger-btn" id="deleteTaskBtn">Delete</button><div class="dialog-actions-right"><button type="button" class="subtle-btn" id="cancelDialogBtn">Cancel</button><button value="default" class="primary-btn">Save</button></div></div></form></dialog>
+
+  <div class="bottom-capture">
+    <div class="capture-inner">
+      <input id="quickAdd" class="capture-input" type="text" autocomplete="off" placeholder="Quick capture… Verb + Object + Outcome" />
+      <button class="add-btn" id="addBtn" aria-label="Add to action queue">+</button>
+    </div>
+  </div>
+
+  <dialog id="taskDialog">
+    <form method="dialog" class="modal" id="taskForm">
+      <div class="modal-head">
+        <div><div class="eyebrow">Execution task</div><h2 id="taskDialogTitle">Edit task</h2></div>
+        <button type="button" class="icon-btn" id="cancelDialogBtn" aria-label="Close">×</button>
+      </div>
+      <input type="hidden" id="editId" />
+
+      <div class="field full-field">
+        <label for="editTitle">Task <span>Verb + Object + Outcome</span></label>
+        <input id="editTitle" required maxlength="160" placeholder="Audit Sales 83 funnel and identify top conversion leak" />
+        <div class="field-hint" id="titleHint"></div>
+      </div>
+
+      <div class="form-grid">
+        <div class="field"><label for="editProject">Account / Project</label><input id="editProject" maxlength="80" placeholder="Four Seasons" /></div>
+        <div class="field"><label for="editPriority">Priority</label><select id="editPriority"><option value="P1">P1</option><option value="P2">P2</option><option value="P3">P3</option></select></div>
+        <div class="field"><label for="editLane">Board</label><select id="editLane"><option value="today">Today</option><option value="tomorrow">Tomorrow</option><option value="pending">Pending</option><option value="waiting">Waiting</option><option value="blocked">Blocked</option></select></div>
+        <div class="field"><label for="editStatus">Status</label><select id="editStatus"><option>To Do</option><option>Doing</option><option>Waiting</option><option>Blocked</option><option>Done</option></select></div>
+        <div class="field"><label for="editDeadline">Deadline</label><input id="editDeadline" type="date" /></div>
+        <div class="field"><label for="editTaskType">Task type</label><select id="editTaskType"><option value="mustwin">Must Win</option><option value="quick">Quick Task</option><option value="normal">Normal</option></select></div>
+      </div>
+
+      <div class="field full-field"><label for="editProblem">Problem / Why</label><textarea id="editProblem" rows="2" placeholder="LP CVR is below target"></textarea></div>
+      <div class="field full-field"><label for="editOutcome">Expected Outcome</label><textarea id="editOutcome" rows="2" placeholder="Identify the first meaningful leak and next test"></textarea></div>
+      <div class="field full-field"><label for="editNextStep">Next Step</label><textarea id="editNextStep" rows="2" placeholder="Open LP analytics and compare click → session → message"></textarea></div>
+      <div class="field full-field"><label for="editResult">Result</label><textarea id="editResult" rows="2" placeholder="What actually happened after execution?"></textarea></div>
+
+      <div id="dependencyFields" class="dependency-box">
+        <div class="form-grid">
+          <div class="field"><label for="editWaitingOn">Waiting on</label><input id="editWaitingOn" maxlength="80" placeholder="Designer / Sales team" /></div>
+          <div class="field"><label for="editSince">Since</label><input id="editSince" type="date" /></div>
+          <div class="field"><label for="editFollowUp">Follow-up date</label><input id="editFollowUp" type="date" /></div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="danger-btn" id="deleteTaskBtn">Delete</button>
+        <div class="dialog-actions-right"><button type="submit" class="primary-btn">Save task</button></div>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="summaryDialog">
+    <div class="modal summary-modal">
+      <div class="modal-head">
+        <div><div class="eyebrow">Manager visibility</div><h2>Daily Summary</h2></div>
+        <button type="button" class="icon-btn" id="closeSummaryBtn" aria-label="Close">×</button>
+      </div>
+      <textarea id="managerSummaryText" class="summary-textarea" rows="18" readonly></textarea>
+      <div class="modal-actions summary-actions">
+        <button type="button" class="subtle-btn" id="refreshSummaryBtn">Refresh</button>
+        <button type="button" class="primary-btn" id="copySummaryBtn">Copy for WhatsApp</button>
+      </div>
+    </div>
+  </dialog>
+
   <script src="/focus/app.js" defer></script>
 </body>
 </html>
