@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#f4f6fa" />
   <meta name="description" content="A deliberately small task system: capture everything, choose only three outcomes, focus on one thing now." />
-  <link rel="manifest" href="./manifest.webmanifest" />
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="manifest" href="/focus/manifest.webmanifest" />
+  <link rel="stylesheet" href="/focus/styles.css" />
   <title>Shiffo Focus</title>
 </head>
 <body>
@@ -41,6 +41,6 @@
   </div>
   <div class="bottom-capture"><div class="capture-inner"><input id="quickAdd" class="capture-input" type="text" autocomplete="off" placeholder="Add a task… e.g. Send campaign report" /><button class="add-btn" id="addBtn" aria-label="Add task">+</button></div></div>
   <dialog id="taskDialog"><form method="dialog" class="modal" id="taskForm"><h2>Edit task</h2><input type="hidden" id="editId" /><div class="field"><label for="editTitle">Task</label><input id="editTitle" required maxlength="140" /></div><div class="field"><label for="editCategory">Category</label><select id="editCategory"><option>Work</option><option>Growth</option><option>Personal</option></select></div><div class="field"><label for="editEstimate">Estimate</label><select id="editEstimate"><option value="">No estimate</option><option value="15m">15m</option><option value="30m">30m</option><option value="45m">45m</option><option value="60m">60m</option><option value="90m">90m</option></select></div><div class="modal-actions"><button type="button" class="danger-btn" id="deleteTaskBtn">Delete</button><div class="dialog-actions-right"><button type="button" class="subtle-btn" id="cancelDialogBtn">Cancel</button><button value="default" class="primary-btn">Save</button></div></div></form></dialog>
-  <script src="./app.js" defer></script>
+  <script src="/focus/app.js" defer></script>
 </body>
 </html>
