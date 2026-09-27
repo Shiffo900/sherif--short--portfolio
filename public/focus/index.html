@@ -4,9 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#f4f6fa" />
-  <meta name="description" content="Shiffo Focus — a personal execution board built around must-wins, next actions and manager visibility." />
+  <meta name="description" content="Shiffo Focus — a personal execution board built around projects, must-wins, next actions and manager visibility." />
   <link rel="manifest" href="/focus/manifest.webmanifest" />
   <link rel="stylesheet" href="/focus/styles.css" />
+  <link rel="stylesheet" href="/focus/projects.css" />
   <title>Shiffo Focus</title>
 </head>
 <body>
@@ -37,6 +38,7 @@
         </div>
 
         <nav class="summary" aria-label="Views">
+          <button class="pill" data-view="projects">Projects <span id="projectsCount"></span></button>
           <button class="pill active" data-view="today">Today</button>
           <button class="pill" data-view="tomorrow">Tomorrow <span id="tomorrowCount"></span></button>
           <button class="pill" data-view="pending">Pending <span id="pendingCount"></span></button>
@@ -45,6 +47,22 @@
           <button class="pill" data-view="done">Done</button>
           <button class="pill danger-pill" data-view="overdue">Overdue <span id="overdueTabCount"></span></button>
         </nav>
+
+        <div id="projectsView" class="view-panel" hidden>
+          <section class="section">
+            <div class="section-head">
+              <div>
+                <div class="section-title">Projects</div>
+                <div class="section-note">Create the project once, then attach every task to it.</div>
+              </div>
+              <button class="mini-btn" id="newProjectBtn">+ New Project</button>
+            </div>
+            <div id="projectsGrid" class="projects-grid"></div>
+          </section>
+          <section id="projectDetailSection" class="section project-detail-section" hidden>
+            <div id="projectDetail"></div>
+          </section>
+        </div>
 
         <div id="todayView" class="view-panel">
           <section class="section">
@@ -145,7 +163,7 @@
           </section>
         </div>
 
-        <div class="footer-note">Capture → Clarify → Choose 3 → Do 1 → Record the result.</div>
+        <div class="footer-note">Project → Problem → Action → Result.</div>
       </section>
     </main>
   </div>
@@ -156,6 +174,8 @@
       <button class="add-btn" id="addBtn" aria-label="Add to action queue">+</button>
     </div>
   </div>
+
+  <datalist id="projectOptions"></datalist>
 
   <dialog id="taskDialog">
     <form method="dialog" class="modal" id="taskForm">
@@ -172,7 +192,7 @@
       </div>
 
       <div class="form-grid">
-        <div class="field"><label for="editProject">Account / Project</label><input id="editProject" maxlength="80" placeholder="Four Seasons" /></div>
+        <div class="field"><label for="editProject">Project <span>Choose or type one</span></label><input id="editProject" list="projectOptions" maxlength="80" placeholder="Four Seasons" /></div>
         <div class="field"><label for="editPriority">Priority</label><select id="editPriority"><option value="P1">P1</option><option value="P2">P2</option><option value="P3">P3</option></select></div>
         <div class="field"><label for="editLane">Board</label><select id="editLane"><option value="today">Today</option><option value="tomorrow">Tomorrow</option><option value="pending">Pending</option><option value="waiting">Waiting</option><option value="blocked">Blocked</option></select></div>
         <div class="field"><label for="editStatus">Status</label><select id="editStatus"><option>To Do</option><option>Doing</option><option>Waiting</option><option>Blocked</option><option>Done</option></select></div>
@@ -196,6 +216,22 @@
       <div class="modal-actions">
         <button type="button" class="danger-btn" id="deleteTaskBtn">Delete</button>
         <div class="dialog-actions-right"><button type="submit" class="primary-btn">Save task</button></div>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="projectDialog">
+    <form method="dialog" class="modal project-modal" id="projectForm">
+      <div class="modal-head">
+        <div><div class="eyebrow">Project</div><h2 id="projectDialogTitle">New project</h2></div>
+        <button type="button" class="icon-btn" id="closeProjectBtn" aria-label="Close">×</button>
+      </div>
+      <input type="hidden" id="editProjectId" />
+      <div class="field full-field"><label for="projectName">Project name</label><input id="projectName" required maxlength="80" placeholder="Four Seasons Travel" /></div>
+      <div class="field full-field"><label for="projectGoal">Goal / context</label><textarea id="projectGoal" rows="3" placeholder="Example: Improve acquisition efficiency and close the current funnel bottleneck."></textarea></div>
+      <div class="modal-actions project-modal-actions">
+        <button type="button" class="danger-btn" id="deleteProjectBtn">Delete project</button>
+        <button type="submit" class="primary-btn">Save project</button>
       </div>
     </form>
   </dialog>
